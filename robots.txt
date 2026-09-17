@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_build/
+
+Sitemap: https://gk-xelon.ru/sitemap.xml
