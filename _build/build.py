@@ -82,14 +82,16 @@ NAV = [
         ("agro.html", "Сельхоздроны", "Опрыскиватели 20/30/50 л, погрузчики 15–200 кг"),
         ("fpv.html", "FPV-комплексы ZTK", "Рамы 7″–15″, аккумуляторы, комплектующие"),
         ("fiber.html", "Оптоволоконные системы", "Катушки 10–30 км, модули ZR LINK"),
-        ("catalog.html", "Весь каталог с фильтрами", "30 позиций"),
+        ("enterprise.html", "Промышленные дроны Autel", "EVO Lite, EVO Max, Alpha, Titan, Dragonfish"),
+        ("counter-uas.html", "Антидроновые системы", "Детекторы, радары, подавители Skyfend"),
+        ("catalog.html", "Весь каталог с фильтрами", "55 позиций"),
     ]),
     ("terms.html", "Условия", None),
     ("about.html", "О компании", None),
     ("contacts.html", "Контакты", None),
 ]
 AC = ' aria-current="page"'
-CATALOG_PAGES = {"catalog.html", "agro.html", "fpv.html", "fiber.html"}
+CATALOG_PAGES = {"catalog.html", "agro.html", "fpv.html", "fiber.html", "enterprise.html", "counter-uas.html"}
 
 def header(path):
     items = []
@@ -126,7 +128,9 @@ def footer():
       </div>
       <div><h4>Каталог</h4><ul>
         <li><a href="agro.html">Сельхоздроны</a></li><li><a href="fpv.html">FPV-комплексы ZTK</a></li>
-        <li><a href="fiber.html">Оптоволоконные системы</a></li><li><a href="catalog.html">Весь каталог</a></li></ul></div>
+        <li><a href="fiber.html">Оптоволоконные системы</a></li>
+        <li><a href="enterprise.html">Промышленные дроны Autel</a></li><li><a href="counter-uas.html">Антидроновые системы</a></li>
+        <li><a href="catalog.html">Весь каталог</a></li></ul></div>
       <div><h4>Компания</h4><ul>
         <li><a href="terms.html">Условия сотрудничества</a></li><li><a href="about.html">О компании</a></li>
         <li><a href="contacts.html">Контакты</a></li></ul></div>
@@ -365,20 +369,22 @@ BLUEPRINT = '''<svg class="blueprint" viewBox="0 0 580 500" fill="none" aria-hid
 
 # ================================================================== PAGES
 def build_index():
-    metrics = [("layers", "3", "категории техники"), ("drone", "9", "моделей в линейке"), ("ship", "FOB", "Шэньчжэнь"),
-               ("signal", "30 км", "макс. дальность оптоволокна"), ("shield", "IP65", "класс защиты сельхоздронов"),
+    metrics = [("layers", "5", "направлений техники"), ("drone", "55", "позиций в каталоге"), ("ship", "FOB", "Шэньчжэнь"),
+               ("signal", "50 км", "макс. дальность полёта Titan"), ("shield", "IP65", "класс защиты сельхоздронов"),
                ("weight", "до 200 кг", "грузоподъёмность погрузчиков")]
     m_html = "".join(f'<div class="metric"><span class="metric-icon">{icon(i)}</span><div><div class="metric-value">{count_wrap(v)}</div><div class="metric-label">{l}</div></div></div>' for i, v, l in metrics)
     dirs = [
         ("01", "agro.html", "sprayer-30l.jpg", "Сельскохозяйственные дроны", "Опрыскиватели 20/30/50 л и погрузочно-разбрасывающие платформы от 15 до 200 кг грузоподъёмности.", ["3 модели опрыскивателей", "5 моделей погрузчиков", "Класс защиты IP65"]),
         ("02", "fpv.html", "fpv-an13b.jpg", "FPV-комплексы ZTK", "Линейка рам 7″–15″ для мониторинга, инспекции и специальных задач, скорость до 160 км/ч.", ["4 модели рам", "6 типов аккумуляторов", "Полный набор комплектующих"]),
         ("03", "fiber.html", "zr-link-ground.jpg", "Оптоволоконные системы", "Катушки оптоволокна 10–30 км и модули воздушного/наземного конца для помехозащищённой связи.", ["4 длины катушек", "Воздушный модуль ZR LINK", "Наземный модуль ZR LINK"]),
+        ("04", "enterprise.html", "autel-titan.jpg", "Промышленные дроны Autel", "Мультироторы EVO Lite, EVO Max, Alpha, Titan и VTOL Dragonfish для мониторинга, инспекции и доставки нагрузки.", ["7 моделей и серий", "до 10 кг нагрузки", "до 180 мин в воздухе"]),
+        ("05", "counter-uas.html", "tracker-eye.jpg", "Антидроновые системы", "Обнаружение, пеленгация и противодействие БПЛА: детекторы, радары, оптика, подавители и GNSS-спуферы Skyfend.", ["18 позиций", "Радары до 15 км", "Носимые и стационарные"]),
     ]
     d_html = "".join(f'''<a class="dir-card" href="{href}">
 <div class="dir-media"><span class="dir-num">{n}</span><img src="assets/img/products/{img}" alt="" loading="lazy" decoding="async" width="400" height="300"></div>
 <div class="dir-body"><h3>{t}</h3><p>{d}</p><ul class="dir-list">{''.join(f"<li>{x}</li>" for x in li)}</ul>
 <span class="dir-more">Перейти в раздел {icon("arrow")}</span></div></a>''' for n, href, img, t, d, li in dirs)
-    featured = [p for p in D.P if p["id"] in ("sprayer-50l", "loader-s200pro", "fpv-an15b", "spool-zr030")]
+    featured = [p for p in D.P if p["id"] in ("sprayer-50l", "loader-s200pro", "autel-titan", "dragonfish")]
     f_html = "".join(product_card(p, show_tag=True) for p in featured)
     terms = "".join(f'<div class="term"><div class="term-k"><span class="kit-icon">{icon(i)}</span>{k}</div><p class="term-v">{v}</p></div>' for i, k, v in D.TERMS)
 
@@ -415,7 +421,7 @@ def build_index():
 
 <section class="section">
   <div class="container">
-    {section_head("01 · Структура предложения", "Три направления беспилотной техники", "Полный спектр беспилотной техники для сельского хозяйства и специальных задач. Каждая позиция — с полными ТТХ, комплектацией и ценой.")}
+    {section_head("01 · Структура предложения", "Пять направлений беспилотной техники", "Сельхоздроны, FPV-комплексы, оптоволоконная связь, промышленные дроны Autel и антидроновые системы Skyfend. Каждая позиция — с полными ТТХ производителя.")}
     <div class="dir-grid">{d_html}</div>
   </div>
 </section>
@@ -446,6 +452,8 @@ def build_index():
         <li>Сельхоздроны — 8 моделей: опрыскиватели и погрузчики</li>
         <li>FPV-комплексы ZTK — 4 рамы, аккумуляторы, комплектующие</li>
         <li>Оптоволокно — 4 катушки, воздушный и наземный модули</li>
+        <li>Дроны Autel — 7 моделей и серий, от EVO Lite до Dragonfish</li>
+        <li>Антидроновые системы Skyfend — 18 позиций</li>
       </ul>
     </div>
     {request_form()}
@@ -598,7 +606,7 @@ def build_fiber():
 def build_catalog():
     hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог")],
                          "Каталог техники", "Каталог беспилотных авиационных комплексов",
-                         "30 позиций в трёх направлениях. Фильтруйте по категории, типу, цене и грузоподъёмности — и отправьте запрос на расчёт.")
+                         "55 позиций в пяти направлениях. Фильтруйте по категории, типу, цене и грузоподъёмности — и отправьте запрос на расчёт.")
     cats = [("all", "Все", len(D.P))] + [(k, v["title"], len(by(cat=k))) for k, v in D.CATEGORIES.items()]
     seg = "".join(f'<label><input type="radio" name="cat" value="{k}"{" checked" if k=="all" else ""}><span>{t} <span class="count">{n}</span></span></label>' for k, t, n in cats)
     subopts = "".join(f'<option value="{k}" data-cat="{next(p["cat"] for p in D.P if p["sub"]==k)}">{v}</option>' for k, v in D.SUBTYPES.items())
@@ -640,6 +648,76 @@ def build_catalog():
     return page("catalog.html", "Каталог: сельхоздроны, FPV-комплексы, оптоволоконные системы — XELON AERO",
                 "Каталог XELON AERO: дроны-опрыскиватели, погрузчики до 200 кг, FPV-рамы ZTK, аккумуляторы, комплектующие, катушки оптоволокна 10–30 км. Фильтр по цене и грузоподъёмности.",
                 body, [bl, itemlist_ld(D.P, "Каталог XELON AERO")])
+
+
+def build_enterprise():
+    hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("enterprise.html", "Промышленные дроны Autel")],
+                         "Направление 04 · Промышленные дроны", "Промышленные дроны Autel",
+                         "Мультироторные платформы EVO Lite, EVO Max, Alpha и Titan и VTOL-комплекс Dragonfish для мониторинга, инспекции, картографирования и доставки полезной нагрузки.",
+                         ["7 моделей и серий", "до 10 кг нагрузки", "до 180 мин полёта", "до 50 км дальности", "RTK-съёмка"])
+    multi, vtol = by(cat="uav", sub="uav-multirotor"), by(cat="uav", sub="uav-vtol")
+    rows = [("EVO Lite Enterprise", "40 мин", "12 км", "6K + тепловизор 640×512", "—"),
+            ("EVO Max", "42 мин", "≈20 км", "Starlight 0,0001 люкс", "—"),
+            ("Autel Alpha", "—", "≈20 км", "4K, 35× зум + двойной тепловизор", "—"),
+            ("Autel Titan", "60 мин", "50 км", "Сменные полезные нагрузки", "10 кг"),
+            ("Dragonfish", "180 / 120 / 75 мин", "≈30 км", "4K, 20× зум", "—"),
+            ("EVO II Enterprise", "42 мин", "≈13 км", "16× цифровой зум, ADS-B", "—"),
+            ("EVO II RTK", "40 мин", "≈13 км", "RTK, сантиметровая точность", "—")]
+    trow = "".join(f'<tr><th scope="row" class="model">{esc(m)}</th><td class="num">{esc(t)}</td><td class="num">{esc(r)}</td><td>{esc(c)}</td><td class="num">{esc(pl)}</td></tr>' for m, t, r, c, pl in rows)
+    body = f'''{hero}
+<section class="section" id="multirotor">
+  <div class="container">
+    {section_head("04.1 · Мультироторные", "Мультироторные платформы", "Компактные и тяжёлые мультироторы для мониторинга, инспекции, аэрофотосъёмки и доставки нагрузки.")}
+    <div class="product-grid cols-3">{''.join(product_card(p) for p in multi)}</div>
+  </div>
+</section>
+
+<section class="section section-alt" id="vtol">
+  <div class="container">
+    {section_head("04.2 · VTOL", "Комплексы самолётного типа", "Вертикальный взлёт и посадка, длительное патрулирование больших площадей.")}
+    <div class="product-grid cols-2">{''.join(product_card(p) for p in vtol)}</div>
+    <h3 class="mt-48" style="font-size:24px;margin-bottom:16px">Сравнение линейки</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Сравнение дронов Autel">
+      <table class="data-table sticky-first"><thead><tr><th scope="col">Модель</th><th scope="col">Время полёта</th><th scope="col">Дальность связи</th><th scope="col">Полезная нагрузка / камера</th><th scope="col">Грузоподъёмность</th></tr></thead><tbody>{trow}</tbody></table>
+    </div>
+    {table_hint()}
+    <div class="mt-24">{notice("Характеристики приведены по презентации производителя Autel Robotics. Цены, комплектация и состав полезной нагрузки — по запросу.")}</div>
+  </div>
+</section>
+{cta_band()}'''
+    return page("enterprise.html", "Промышленные дроны Autel: EVO Lite, EVO Max, Alpha, Titan, Dragonfish — XELON AERO",
+                "Поставка промышленных дронов Autel: EVO Lite Enterprise, EVO Max, Autel Alpha, Titan (нагрузка 10 кг), VTOL Dragonfish, EVO II Enterprise и EVO II RTK.",
+                body, [bl, itemlist_ld(multi + vtol, "Промышленные дроны Autel")], og_img="assets/img/products/autel-titan.jpg")
+
+def build_cuas():
+    hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("counter-uas.html", "Антидроновые системы")],
+                         "Направление 05 · Антидроновые системы", "Антидроновые системы Skyfend",
+                         "Обнаружение, пеленгация, классификация и противодействие БПЛА: носимые детекторы, радары, оптико-электронные посты, подавители, GNSS-спуферы и комплексные решения.",
+                         ["18 позиций", "Радары до 15 км", "Носимые и стационарные", "Возимые комплексы"])
+    groups = [("cuas-detect", "05.1 · Обнаружение", "Детекторы и пеленгаторы", "Декодирование Drone ID и Remote ID, спектральный анализ, определение позиции дрона и оператора."),
+              ("cuas-radar", "05.2 · Радары и оптика", "Радиолокационные и оптико-электронные средства", "Обнаружение целей вне зоны радиосвязи: ФАР-радары K- и X-диапазона, поворотные посты с дневной камерой и тепловизором."),
+              ("cuas-jammer", "05.3 · Подавление", "Средства радиоподавления", "Носимые, стационарные и возимые комплексы подавления каналов управления и навигации."),
+              ("cuas-spoof", "05.4 · GNSS-спуферы", "Имитаторы навигационных сигналов", "Формирование гражданских навигационных сигналов для увода и удержания дронов вне защищаемой зоны."),
+              ("cuas-laser", "05.5 · Лазерные системы", "Лазерная нейтрализация", "Высокоточный модуль с радиолокационным наведением для борьбы с малыми БПЛА."),
+              ("cuas-complex", "05.6 · Комплексные системы", "Комплексы под ключ", "Многоуровневые системы с объединением данных РЧ, радара и оптики и ИИ-аналитикой.")]
+    secs = []
+    for i, (sub, num, title, lead) in enumerate(groups):
+        items = by(cat="cuas", sub=sub)
+        cols = "cols-3" if len(items) > 2 else "cols-2"
+        secs.append(f'''<section class="section{" section-alt" if i % 2 else ""}" id="{sub}">
+  <div class="container">
+    {section_head(num, title, lead)}
+    <div class="product-grid {cols}">{''.join(product_card(p) for p in items)}</div>
+  </div>
+</section>''')
+    body = f'''{hero}
+<section class="section-sm"><div class="container">{notice("Оборудование радиоподавления, GNSS-имитации и лазерного воздействия относится к технике ограниченного оборота. Поставка возможна уполномоченным организациям при наличии разрешительных документов и согласовании условий ввоза и эксплуатации в стране заказчика.")}</div></section>
+{''.join(secs)}
+<section class="section-sm"><div class="container">{notice("Все характеристики приведены по данным производителя Skyfend. Цены и комплектация — по запросу.")}</div></section>
+{cta_band()}'''
+    return page("counter-uas.html", "Антидроновые системы Skyfend: детекторы, радары, подавители — XELON AERO",
+                "Поставка антидроновых систем Skyfend: детекторы Tracer, радары Tracker, оптико-электронные посты Tracker Eye, подавители Hunter, GNSS-спуферы Spoofer, комплексы Spotter и Sentry.",
+                body, [bl, itemlist_ld(by(cat="cuas"), "Антидроновые системы Skyfend")], og_img="assets/img/products/tracker-eye.jpg")
 
 def build_terms():
     hero, bl = page_hero([("index.html", "Главная"), ("terms.html", "Условия сотрудничества")],
@@ -773,12 +851,12 @@ def build_404():
 # ------------------------------------------------------------------ write
 def main():
     pages = {"index.html": build_index, "catalog.html": build_catalog, "agro.html": build_agro, "fpv.html": build_fpv,
-             "fiber.html": build_fiber, "terms.html": build_terms, "about.html": build_about, "contacts.html": build_contacts,
+             "fiber.html": build_fiber, "enterprise.html": build_enterprise, "counter-uas.html": build_cuas, "terms.html": build_terms, "about.html": build_about, "contacts.html": build_contacts,
              "404.html": build_404}
     for name, fn in pages.items():
         with open(os.path.join(ROOT, name), "w", encoding="utf-8") as f:
             f.write(fn())
-    pri = {"index.html": "1.0", "catalog.html": "0.9", "agro.html": "0.9", "fpv.html": "0.9", "fiber.html": "0.9", "contacts.html": "0.8", "terms.html": "0.7", "about.html": "0.6"}
+    pri = {"index.html": "1.0", "catalog.html": "0.9", "agro.html": "0.9", "fpv.html": "0.9", "fiber.html": "0.9", "enterprise.html": "0.9", "counter-uas.html": "0.9", "contacts.html": "0.8", "terms.html": "0.7", "about.html": "0.6"}
     urls = "".join(f'  <url><loc>{S["url"]}/{"" if n=="index.html" else n}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority></url>\n' for n, p in pri.items())
     open(os.path.join(ROOT, "sitemap.xml"), "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /_build/\n\nSitemap: {S['url']}/sitemap.xml\n")
