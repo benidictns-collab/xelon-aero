@@ -641,3 +641,7 @@ a, button, summary, label, select, [role="button"] { cursor: pointer; }
   .product-card:hover .pc-media img { transform: none; }
 }
 @media (max-width: 480px) { .hero h1 { font-size: clamp(26px, 7.6vw, 30px); } }
+
+/* 5 направлений на главной */
+@media (min-width: 900px) { .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .dir-grid > .dir-card:nth-child(4), .dir-grid > .dir-card:nth-child(5) { grid-column: span 1; } }
