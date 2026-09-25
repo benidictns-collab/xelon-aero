@@ -6,6 +6,8 @@
 - `index.html` — главная
 - `catalog.html` — весь каталог с фильтрами (категория, тип, цена, грузоподъёмность, сортировка; параметры в URL)
 - `agro.html`, `fpv.html`, `fiber.html` — разделы каталога
+- `enterprise.html` — промышленные дроны Autel, `counter-uas.html` — антидроновые системы Skyfend
+- `gimbals.html` — оптико-электронные подвесы QIANJUE (данные собираются из `_build/qj.json`)
 - `terms.html` — условия, `about.html` — о компании, `contacts.html` — контакты и форма
 - `404.html`, `sitemap.xml`, `robots.txt`
 
