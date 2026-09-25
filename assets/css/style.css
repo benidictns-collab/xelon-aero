@@ -229,7 +229,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .section-head p { color: var(--muted); max-width: 720px; font-size: 17px; }
 @media (min-width: 1024px) {
   .section-head.split { grid-template-columns: 1fr auto; align-items: end; }
-  .section-head.split > div { display: grid; gap: 14px; }
+  .section-head.split > div:not(.currency-toggle) { display: grid; gap: 14px; }
 }
 
 /* ---------- Direction cards ---------- */
@@ -645,3 +645,28 @@ a, button, summary, label, select, [role="button"] { cursor: pointer; }
 /* 5 направлений на главной */
 @media (min-width: 900px) { .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 1200px) { .dir-grid > .dir-card:nth-child(4), .dir-grid > .dir-card:nth-child(5) { grid-column: span 1; } }
+.specs .spec-group th { background: var(--navy-900); color: var(--on-dark); font-weight: 700; font-size: 12.5px; letter-spacing: .02em; width: auto; }
+.specs tr.spec-group:nth-child(even) > * { background: var(--navy-900); }
+/* карточка: изображение всегда вписано в блок 4:3 */
+.pc-media { position: relative; }
+.pc-media img, .pc-media svg.placeholder { position: absolute; inset: 20px; width: calc(100% - 40px); height: calc(100% - 40px); object-fit: contain; }
+
+/* переключатель валюты показывается только при заданном курсе */
+.currency-toggle:not(.is-enabled) { display: none !important; }
+
+/* ---------- Страница модели ---------- */
+.product-hero { padding-bottom: 48px; }
+.product-hero-grid { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 900px) { .product-hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 48px; } }
+.product-shot { margin: 0; background: #fff; border-radius: 18px; padding: 24px; display: grid; place-items: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,.45), 0 0 0 1px rgba(169,191,255,.18); }
+.product-shot img { max-height: 340px; width: auto; object-fit: contain; mix-blend-mode: multiply; }
+.prose { display: grid; gap: 16px; color: var(--text-2); font-size: 17px; line-height: 1.65; max-width: 68ch; }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.fact { background: var(--bg); padding: 18px; display: grid; gap: 4px; }
+.fact b { font-size: 22px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.fact span { font-size: 13px; color: var(--muted); line-height: 1.35; }
+.app-list { list-style: none; display: grid; gap: 10px; }
+.app-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 16.5px; color: var(--text-2); }
+.app-list svg { width: 20px; height: 20px; flex: none; color: var(--blue); margin-top: 3px; }
+.pc-actions .btn-outline { flex: 0 0 auto; }
