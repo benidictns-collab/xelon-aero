@@ -209,7 +209,7 @@
       var endpoint = CFG.crmWebhook || CFG.formEndpoint || "";
       if (!endpoint || /YOUR_FORM_ID/.test(endpoint)) {
         console.warn("[XELON AERO] Форма в демо-режиме. Укажите formEndpoint в assets/js/config.js", payload);
-        show("warn", "Демо-режим: форма ещё не подключена к почте/CRM. Напишите нам на info@gk-xelon.ru — или администратору сайта нужно указать Formspree ID в assets/js/config.js.");
+        show("warn", "Демо-режим: форма ещё не подключена к почте/CRM. Напишите нам на info@xelon-aero.ru — или администратору сайта нужно указать Formspree ID в assets/js/config.js.");
         return;
       }
       btn.disabled = true; var label = btn.innerHTML; btn.textContent = "Отправка…";
@@ -219,7 +219,7 @@
           form.reset(); updateCounts(); delete form.dataset.touched;
           show("ok", "Спасибо! Запрос отправлен — мы подготовим расчёт стоимости, сроков и условий поставки и свяжемся с вами.");
         })
-        .catch(function () { show("err", "Не удалось отправить запрос. Попробуйте ещё раз или напишите на info@gk-xelon.ru."); })
+        .catch(function () { show("err", "Не удалось отправить запрос. Попробуйте ещё раз или напишите на info@xelon-aero.ru."); })
         .then(function () { btn.disabled = false; btn.innerHTML = label; });
     });
   });
