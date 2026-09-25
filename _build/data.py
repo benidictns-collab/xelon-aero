@@ -7,9 +7,9 @@
 
 SITE = {
     "name": "XELON AERO",
-    "url": "https://gk-xelon.ru",          # базовый домен для canonical / sitemap — заменить при необходимости
-    "email": "info@gk-xelon.ru",           # из презентации
-    "site_label": "gk-xelon.ru",           # из презентации
+    "url": "https://xelon-aero.ru",          # базовый домен для canonical / sitemap — заменить при необходимости
+    "email": "info@xelon-aero.ru",           # из презентации
+    "site_label": "xelon-aero.ru",           # из презентации
     "telegram": "https://t.me/USERNAME",   # TODO: указать реальный аккаунт
     "whatsapp": "https://wa.me/70000000000",  # TODO: указать реальный номер
     "parent": "НАО «ГК КСЕЛОН»",
