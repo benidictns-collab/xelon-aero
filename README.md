@@ -12,7 +12,7 @@
 ## Перед запуском
 1. **Форма**: на formspree.io создайте форму, вставьте ID в `assets/js/config.js` (`formEndpoint`). Для своей CRM укажите `crmWebhook` (POST JSON).
 2. **Мессенджеры**: Telegram и WhatsApp в `_build/data.py` → `SITE` (сейчас заглушки), затем пересоберите.
-3. **Домен**: `SITE.url` в `_build/data.py` (canonical, sitemap, Open Graph). Сейчас стоит gk-xelon.ru.
+3. **Домен**: `SITE.url` в `_build/data.py` (canonical, sitemap, Open Graph). Сейчас стоит xelon-aero.ru.
 4. **Курс RMB** (необязательно): `rubPerCny` в `config.js`. После этого на страницах с ценами появится переключатель ₽/¥.
 5. **Фото**: `assets/img/products/` — изображения из презентации, разрешение низкое. Замените их файлами крупнее с теми же именами. Для S630, S450, S100pro и S200pro фото нет, поэтому на карточках стоят схемы.
 
