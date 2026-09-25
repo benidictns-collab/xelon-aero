@@ -84,14 +84,15 @@ NAV = [
         ("fiber.html", "Оптоволоконные системы", "Катушки 10–30 км, модули ZR LINK"),
         ("enterprise.html", "Промышленные дроны Autel", "EVO Lite, EVO Max, Alpha, Titan, Dragonfish"),
         ("counter-uas.html", "Антидроновые системы", "Детекторы, радары, подавители Skyfend"),
-        ("catalog.html", "Весь каталог с фильтрами", "55 позиций"),
+        ("gimbals.html", "Оптико-электронные подвесы", "Гимбалы QIANJUE серий QP, QD и QG"),
+        ("catalog.html", "Весь каталог с фильтрами", "82 позиции"),
     ]),
     ("terms.html", "Условия", None),
     ("about.html", "О компании", None),
     ("contacts.html", "Контакты", None),
 ]
 AC = ' aria-current="page"'
-CATALOG_PAGES = {"catalog.html", "agro.html", "fpv.html", "fiber.html", "enterprise.html", "counter-uas.html"}
+CATALOG_PAGES = {"catalog.html", "agro.html", "fpv.html", "fiber.html", "enterprise.html", "counter-uas.html", "gimbals.html"}
 
 def header(path):
     items = []
@@ -130,6 +131,7 @@ def footer():
         <li><a href="agro.html">Сельхоздроны</a></li><li><a href="fpv.html">FPV-комплексы ZTK</a></li>
         <li><a href="fiber.html">Оптоволоконные системы</a></li>
         <li><a href="enterprise.html">Промышленные дроны Autel</a></li><li><a href="counter-uas.html">Антидроновые системы</a></li>
+        <li><a href="gimbals.html">Оптико-электронные подвесы</a></li>
         <li><a href="catalog.html">Весь каталог</a></li></ul></div>
       <div><h4>Компания</h4><ul>
         <li><a href="terms.html">Условия сотрудничества</a></li><li><a href="about.html">О компании</a></li>
@@ -245,7 +247,9 @@ def product_media(p, eager=False):
 
 def product_card(p, heading="h3", show_tag=False):
     keys = "".join(f'<div class="pc-key"><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in p["keys"])
-    rows = "".join(f'<tr><th scope="row">{esc(k)}</th><td>{esc(v)}</td></tr>' for k, v in p["specs"])
+    rows = "".join(
+        (f'<tr class="spec-group"><th colspan="2" scope="colgroup">{esc(k)}</th></tr>' if not v
+         else f'<tr><th scope="row">{esc(k)}</th><td>{esc(v)}</td></tr>') for k, v in p["specs"])
     if p["price"]:
         price = f'''<div class="pc-price"><span class="label">{esc(p["price_label"])}</span>
 <span class="value" data-rub="{p["price"]}">{rub(p["price"])}</span><span class="vat">без НДС</span></div>'''
@@ -260,7 +264,7 @@ def product_card(p, heading="h3", show_tag=False):
 <dl class="pc-keys" style="margin:0">{keys}</dl>
 <details class="specs"><summary>Все характеристики {icon("chev")}</summary><table><tbody>{rows}</tbody></table></details>
 {price}
-<div class="pc-actions"><a class="btn btn-primary btn-sm" href="contacts.html?model={p["id"]}#form">Запросить КП</a></div>
+<div class="pc-actions">{f'<a class="btn btn-outline btn-sm" href="{p["page"]}">Подробнее {icon("arrow")}</a>' if p.get("page") else ""}<a class="btn btn-primary btn-sm" href="contacts.html?model={p["id"]}#form">Запросить КП</a></div>
 </div>
 </article>'''
 
@@ -268,7 +272,7 @@ def product_ld(p):
     page_url = S["url"] + "/" + D.CATEGORIES[p["cat"]]["page"] + "#" + p["id"]
     o = {"@type": "Product", "@id": page_url, "name": p["name"], "description": p["desc"], "sku": p["id"],
          "category": D.CATEGORIES[p["cat"]]["long"] + " / " + D.SUBTYPES[p["sub"]], "url": page_url,
-         "additionalProperty": [{"@type": "PropertyValue", "name": k, "value": v} for k, v in p["specs"]]}
+         "additionalProperty": [{"@type": "PropertyValue", "name": k, "value": v} for k, v in p["specs"] if v]}
     if p.get("img"):
         o["image"] = S["url"] + "/assets/img/products/" + p["img"]
     if p["price"]:
@@ -369,7 +373,7 @@ BLUEPRINT = '''<svg class="blueprint" viewBox="0 0 580 500" fill="none" aria-hid
 
 # ================================================================== PAGES
 def build_index():
-    metrics = [("layers", "5", "направлений техники"), ("drone", "55", "позиций в каталоге"), ("ship", "FOB", "Шэньчжэнь"),
+    metrics = [("layers", "6", "направлений техники"), ("drone", "82", "позиции в каталоге"), ("ship", "FOB", "Шэньчжэнь"),
                ("signal", "50 км", "макс. дальность полёта Titan"), ("shield", "IP65", "класс защиты сельхоздронов"),
                ("weight", "до 200 кг", "грузоподъёмность погрузчиков")]
     m_html = "".join(f'<div class="metric"><span class="metric-icon">{icon(i)}</span><div><div class="metric-value">{count_wrap(v)}</div><div class="metric-label">{l}</div></div></div>' for i, v, l in metrics)
@@ -379,6 +383,7 @@ def build_index():
         ("03", "fiber.html", "zr-link-ground.jpg", "Оптоволоконные системы", "Катушки оптоволокна 10–30 км и модули воздушного/наземного конца для помехозащищённой связи.", ["4 длины катушек", "Воздушный модуль ZR LINK", "Наземный модуль ZR LINK"]),
         ("04", "enterprise.html", "autel-titan.jpg", "Промышленные дроны Autel", "Мультироторы EVO Lite, EVO Max, Alpha, Titan и VTOL Dragonfish для мониторинга, инспекции и доставки нагрузки.", ["7 моделей и серий", "до 10 кг нагрузки", "до 180 мин в воздухе"]),
         ("05", "counter-uas.html", "tracker-eye.jpg", "Антидроновые системы", "Обнаружение, пеленгация и противодействие БПЛА: детекторы, радары, оптика, подавители и GNSS-спуферы Skyfend.", ["18 позиций", "Радары до 15 км", "Носимые и стационарные"]),
+        ("06", "gimbals.html", "gimbal-qd-200t.jpg", "Оптико-электронные подвесы", "Гимбалы и подвесы QIANJUE серий QP, QD и QG: видимый канал, тепловизор, лазерный дальномер и ИИ-сопровождение целей.", ["27 моделей", "от 260 г", "Сопровождение до 20 целей"]),
     ]
     d_html = "".join(f'''<a class="dir-card" href="{href}">
 <div class="dir-media"><span class="dir-num">{n}</span><img src="assets/img/products/{img}" alt="" loading="lazy" decoding="async" width="400" height="300"></div>
@@ -394,7 +399,7 @@ def build_index():
     <div>
       <p class="eyebrow">Экспорт и партнёрство · B2B</p>
       <h1>Поставка <em>сельско&shy;хозяйственных дронов</em>, погрузочных комплексов и FPV&#8209;систем</h1>
-      <p class="hero-lead">Три линейки беспилотной техники с полными техническими характеристиками, комплектацией и ценой FOB Шэньчжэнь — для агрохолдингов, дистрибьюторов и интеграторов.</p>
+      <p class="hero-lead">Шесть направлений беспилотной техники с полными характеристиками и комплектацией — для агрохолдингов, дистрибьюторов, интеграторов и служб безопасности.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="contacts.html#form">Получить расчёт {icon("arrow")}</a>
         <a class="btn btn-ghost" href="catalog.html">{icon("grid")} Каталог техники</a>
@@ -421,7 +426,7 @@ def build_index():
 
 <section class="section">
   <div class="container">
-    {section_head("01 · Структура предложения", "Пять направлений беспилотной техники", "Сельхоздроны, FPV-комплексы, оптоволоконная связь, промышленные дроны Autel и антидроновые системы Skyfend. Каждая позиция — с полными ТТХ производителя.")}
+    {section_head("01 · Структура предложения", "Шесть направлений беспилотной техники", "Сельхоздроны, FPV-комплексы, оптоволоконная связь, промышленные дроны Autel, антидроновые системы Skyfend и оптико-электронные подвесы QIANJUE. Каждая позиция — с полными ТТХ производителя.")}
     <div class="dir-grid">{d_html}</div>
   </div>
 </section>
@@ -454,6 +459,7 @@ def build_index():
         <li>Оптоволокно — 4 катушки, воздушный и наземный модули</li>
         <li>Дроны Autel — 7 моделей и серий, от EVO Lite до Dragonfish</li>
         <li>Антидроновые системы Skyfend — 18 позиций</li>
+        <li>Оптико-электронные подвесы QIANJUE — 27 моделей</li>
       </ul>
     </div>
     {request_form()}
@@ -606,7 +612,7 @@ def build_fiber():
 def build_catalog():
     hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог")],
                          "Каталог техники", "Каталог беспилотных авиационных комплексов",
-                         "55 позиций в пяти направлениях. Фильтруйте по категории, типу, цене и грузоподъёмности — и отправьте запрос на расчёт.")
+                         "82 позиции в шести направлениях. Фильтруйте по категории, типу, цене и грузоподъёмности — и отправьте запрос на расчёт.")
     cats = [("all", "Все", len(D.P))] + [(k, v["title"], len(by(cat=k))) for k, v in D.CATEGORIES.items()]
     seg = "".join(f'<label><input type="radio" name="cat" value="{k}"{" checked" if k=="all" else ""}><span>{t} <span class="count">{n}</span></span></label>' for k, t, n in cats)
     subopts = "".join(f'<option value="{k}" data-cat="{next(p["cat"] for p in D.P if p["sub"]==k)}">{v}</option>' for k, v in D.SUBTYPES.items())
@@ -718,6 +724,131 @@ def build_cuas():
     return page("counter-uas.html", "Антидроновые системы Skyfend: детекторы, радары, подавители — XELON AERO",
                 "Поставка антидроновых систем Skyfend: детекторы Tracer, радары Tracker, оптико-электронные посты Tracker Eye, подавители Hunter, GNSS-спуферы Spoofer, комплексы Spotter и Sentry.",
                 body, [bl, itemlist_ld(by(cat="cuas"), "Антидроновые системы Skyfend")], og_img="assets/img/products/tracker-eye.jpg")
+
+
+def build_gimbals():
+    hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("gimbals.html", "Оптико-электронные подвесы")],
+                         "Направление 06 · Оптико-электронные системы", "Оптико-электронные подвесы и гимбалы QIANJUE",
+                         "Гиростабилизированные подвесы с камерой видимого диапазона, неохлаждаемым тепловизором и лазерным дальномером. Встроенные компенсация задержки канала, ИИ-распознавание и сопровождение нескольких целей.",
+                         ["27 моделей", "Серии QP, QD, QG", "от 260 г", "до 20 целей одновременно", "Лазерный дальномер"])
+    feats = [("drone", "Субпиксельная стабилизация", "Механическая и электронная двойная стабилизация изображения."),
+             ("grid", "Сопровождение нескольких целей", "Классификация и нумерация целей, захват с клавиатуры или голосом."),
+             ("signal", "Прогнозирующее сопровождение", "Компенсация задержки канала — точный захват движущихся целей."),
+             ("wrench", "Удалённое обслуживание", "Обновление в один клик через веб-интерфейс.")]
+    f_html = "".join(f'<div class="feat"><span class="kit-icon">{icon(i)}</span><h3>{t}</h3><p>{d}</p></div>' for i, t, d in feats)
+    secs = []
+    for i, (series, (sub, title, lead)) in enumerate(D.QJ_SERIES.items()):
+        items = by(cat="gimbal", sub=sub)
+        secs.append(f'''<section class="section{" section-alt" if i % 2 == 0 else ""}" id="{sub}">
+  <div class="container">
+    {section_head(f"06.{i + 1} · Серия Q{series}", title, lead)}
+    <div class="product-grid cols-3">{''.join(product_card(p) for p in items)}</div>
+  </div>
+</section>''')
+    body = f'''{hero}
+<section class="section">
+  <div class="container">
+    {section_head("06.0 · Возможности", "Что умеет интеллектуальный подвес", "Общие функции линейки — по данным производителя.")}
+    <div class="feat-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">{f_html}</div>
+  </div>
+</section>
+{''.join(secs)}
+<section class="section-sm"><div class="container">{notice("Производитель — Chengdu Qiansight Technology (QIANJUE). Все характеристики приведены по презентации серии Q, версия CHS-1.6.7. Цены и комплектация — по запросу.")}</div></section>
+{cta_band()}'''
+    return page("gimbals.html", "Оптико-электронные подвесы и гимбалы QIANJUE: серии QP, QD, QG — XELON AERO",
+                "Поставка гиростабилизированных оптико-электронных подвесов QIANJUE: 27 моделей серий QP, QD и QG с тепловизором, лазерным дальномером и ИИ-сопровождением целей.",
+                body, [bl, itemlist_ld(by(cat="gimbal"), "Оптико-электронные подвесы QIANJUE")], og_img="assets/img/products/gimbal-qd-200t.jpg")
+
+
+def build_product(p):
+    L = p["long"]
+    cat = D.CATEGORIES[p["cat"]]
+    trail = [("index.html", "Главная"), ("catalog.html", "Каталог"), (cat["page"], cat["title"]), (p["page"], p["name"])]
+    bc, bl = breadcrumbs(trail)
+    chips = "".join(f'<span class="chip">{esc(v)} · {esc(t)}</span>' for v, t in L["highlights"])
+    facts = "".join(f'<div class="fact"><b>{esc(v)}</b><span>{esc(t)}</span></div>' for v, t in L["highlights"])
+    paras = "".join(f"<p>{esc(t)}</p>" for t in L["paragraphs"])
+    apps = "".join(f'<li>{icon("check")}<span>{esc(a)}</span></li>' for a in L["apps"])
+    rows = "".join(
+        (f'<tr class="spec-group"><th colspan="2" scope="colgroup">{esc(k)}</th></tr>' if not v
+         else f'<tr><th scope="row">{esc(k)}</th><td>{esc(v)}</td></tr>') for k, v in p["specs"])
+    others = [o for o in by(cat=p["cat"]) if o["id"] != p["id"]][:3]
+    price = ('<div class="pc-price" style="border:0;padding:0"><span class="label">Цена</span>'
+             '<span class="value on-request">По запросу</span></div>')
+    from PIL import Image as _I
+    w, h = _I.open(os.path.join(ROOT, "assets/img/products", p["img"])).size
+    body = f'''<section class="dark grid-bg page-hero product-hero"><div class="container">
+{bc}
+<div class="product-hero-grid">
+  <div>
+    <p class="eyebrow mt-24">Autel Robotics · {esc(D.SUBTYPES[p["sub"]])}</p>
+    <h1>{esc(p["name"])}</h1>
+    <p class="lead">{esc(L["lead"])}</p>
+    <div class="chips mt-24">{chips}</div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="contacts.html?model={p["id"]}#form">Запросить КП {icon("arrow")}</a>
+      <a class="btn btn-ghost" href="{cat["page"]}">{icon("grid")} Все дроны Autel</a>
+    </div>
+  </div>
+  <figure class="product-shot"><img src="assets/img/products/{p["img"]}" alt="{esc(p["name"])}" width="{w}" height="{h}" fetchpriority="high" decoding="async"></figure>
+</div>
+</div></section>
+
+<section class="section">
+  <div class="container split-2 wide-left">
+    <div class="stack">
+      {section_head("О модели", "Что это за платформа")}
+      <div class="prose">{paras}</div>
+    </div>
+    <aside class="stack" style="gap:16px">
+      <div class="panel stack" style="gap:18px">
+        {price}
+        <a class="btn btn-primary btn-block" href="contacts.html?model={p["id"]}#form">Запросить расчёт</a>
+        <p class="hint">{esc(S["price_note"])} Комплектация подбирается под задачу.</p>
+      </div>
+      <div class="facts">{facts}</div>
+    </aside>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    {section_head("Характеристики", "Технические характеристики", "По данным производителя Autel Robotics.")}
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Характеристики {esc(p["name"])}">
+      <table class="data-table sticky-first"><tbody>{rows}</tbody></table>
+    </div>
+    {table_hint()}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-2">
+    <div class="stack">
+      {section_head("Применение", "Для каких задач подходит")}
+      <ul class="app-list">{apps}</ul>
+    </div>
+    <div class="stack">
+      {section_head("Комплектация", "Что уточняем при заказе")}
+      <ul class="app-list">
+        <li>{icon("check")}<span>Состав полезной нагрузки и подвесов</span></li>
+        <li>{icon("check")}<span>Количество аккумуляторов и зарядное оборудование</span></li>
+        <li>{icon("check")}<span>Пульт управления и наземная станция</span></li>
+        <li>{icon("check")}<span>Сроки, условия поставки и сертификация</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    {section_head("Другие модели", "Остальные дроны Autel", None, '<a class="btn btn-outline" href="' + cat["page"] + '">Весь раздел ' + icon("arrow") + '</a>')}
+    <div class="product-grid cols-3">{''.join(product_card(o) for o in others)}</div>
+  </div>
+</section>
+{cta_band()}'''
+    ld = [bl, {"@context": "https://schema.org", **product_ld(p)}]
+    return page(p["page"], f'{p["name"]} — характеристики и расчёт поставки | XELON AERO', L["lead"][:300], body, ld,
+                og_img="assets/img/products/" + p["img"])
 
 def build_terms():
     hero, bl = page_hero([("index.html", "Главная"), ("terms.html", "Условия сотрудничества")],
@@ -851,12 +982,18 @@ def build_404():
 # ------------------------------------------------------------------ write
 def main():
     pages = {"index.html": build_index, "catalog.html": build_catalog, "agro.html": build_agro, "fpv.html": build_fpv,
-             "fiber.html": build_fiber, "enterprise.html": build_enterprise, "counter-uas.html": build_cuas, "terms.html": build_terms, "about.html": build_about, "contacts.html": build_contacts,
+             "fiber.html": build_fiber, "enterprise.html": build_enterprise, "counter-uas.html": build_cuas, "gimbals.html": build_gimbals, "terms.html": build_terms, "about.html": build_about, "contacts.html": build_contacts,
              "404.html": build_404}
+    for _p in D.P:
+        if _p.get("page"):
+            pages[_p["page"]] = (lambda q: (lambda: build_product(q)))(_p)
     for name, fn in pages.items():
         with open(os.path.join(ROOT, name), "w", encoding="utf-8") as f:
             f.write(fn())
-    pri = {"index.html": "1.0", "catalog.html": "0.9", "agro.html": "0.9", "fpv.html": "0.9", "fiber.html": "0.9", "enterprise.html": "0.9", "counter-uas.html": "0.9", "contacts.html": "0.8", "terms.html": "0.7", "about.html": "0.6"}
+    pri = {"index.html": "1.0", "catalog.html": "0.9", "agro.html": "0.9", "fpv.html": "0.9", "fiber.html": "0.9", "enterprise.html": "0.9", "counter-uas.html": "0.9", "gimbals.html": "0.9", "contacts.html": "0.8", "terms.html": "0.7", "about.html": "0.6"}
+    for _p in D.P:
+        if _p.get("page"):
+            pri[_p["page"]] = "0.8"
     urls = "".join(f'  <url><loc>{S["url"]}/{"" if n=="index.html" else n}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority></url>\n' for n, p in pri.items())
     open(os.path.join(ROOT, "sitemap.xml"), "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /_build/\n\nSitemap: {S['url']}/sitemap.xml\n")
