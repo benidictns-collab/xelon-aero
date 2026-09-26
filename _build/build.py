@@ -760,6 +760,23 @@ def build_gimbals():
                 body, [bl, itemlist_ld(by(cat="gimbal"), "Оптико-электронные подвесы QIANJUE")], og_img="assets/img/products/gimbal-qd-200t.jpg")
 
 
+APP_ICONS = [
+    (("доставк", "груз", "контейнер"), "box"), (("патрул", "монитор", "наблюдени", "обход"), "signal"),
+    (("съёмк", "съемк", "картограф", "план", "маркшейд"), "grid"), (("инспекц", "осмотр", "облёт", "обследован"), "wrench"),
+    (("ночн", "темнот", "сумерк"), "shield"), (("поиск", "спасат", "оперативн", "выезд"), "pin"),
+    (("ретрансл", "связ", "сет"), "fiber"), (("строит", "объём", "объем"), "layers"),
+    (("подъём", "подвес", "нагрузк"), "weight"), (("группой", "нескольк"), "drone"),
+]
+
+
+def app_icon(text):
+    t = text.lower()
+    for keys, name in APP_ICONS:
+        if any(k in t for k in keys):
+            return name
+    return "check"
+
+
 def build_product(p):
     L = p["long"]
     cat = D.CATEGORIES[p["cat"]]
@@ -768,7 +785,8 @@ def build_product(p):
     chips = "".join(f'<span class="chip">{esc(v)} · {esc(t)}</span>' for v, t in L["highlights"])
     facts = "".join(f'<div class="fact"><b>{esc(v)}</b><span>{esc(t)}</span></div>' for v, t in L["highlights"])
     paras = "".join(f"<p>{esc(t)}</p>" for t in L["paragraphs"])
-    apps = "".join(f'<li>{icon("check")}<span>{esc(a)}</span></li>' for a in L["apps"])
+    apps = "".join(
+        f'<li class="usecase"><span class="usecase-icon">{icon(app_icon(a))}</span><b>{esc(a)}</b></li>' for a in L["apps"])
     rows = "".join(
         (f'<tr class="spec-group"><th colspan="2" scope="colgroup">{esc(k)}</th></tr>' if not v
          else f'<tr><th scope="row">{esc(k)}</th><td>{esc(v)}</td></tr>') for k, v in p["specs"])
@@ -821,20 +839,23 @@ def build_product(p):
   </div>
 </section>
 
-<section class="section">
-  <div class="container split-2">
-    <div class="stack">
-      {section_head("Применение", "Для каких задач подходит")}
-      <ul class="app-list">{apps}</ul>
-    </div>
-    <div class="stack">
-      {section_head("Комплектация", "Что уточняем при заказе")}
-      <ul class="app-list">
-        <li>{icon("check")}<span>Состав полезной нагрузки и подвесов</span></li>
-        <li>{icon("check")}<span>Количество аккумуляторов и зарядное оборудование</span></li>
-        <li>{icon("check")}<span>Пульт управления и наземная станция</span></li>
-        <li>{icon("check")}<span>Сроки, условия поставки и сертификация</span></li>
-      </ul>
+<section class="section dark grid-bg usecase-band">
+  <div class="container">
+    <div class="section-head"><span class="num">Применение и поставка</span><h2>Где работает {esc(p["short"])} и что входит в поставку</h2>
+      <p>Сценарии — типовые для этой платформы; состав комплекта собираем под вашу задачу.</p></div>
+    <div class="usecase-layout">
+      <ul class="usecase-grid">{apps}</ul>
+      <div class="kit-panel">
+        <h3>Комплектация под задачу</h3>
+        <p class="kit-lead">Перед расчётом согласуем четыре пункта — от них зависят цена и срок поставки.</p>
+        <ol class="kit-steps">
+          <li><b>Полезная нагрузка</b><span>Камеры, подвесы и дополнительное оборудование под сценарий работы.</span></li>
+          <li><b>Питание</b><span>Количество аккумуляторов и зарядное оборудование для нужного темпа вылетов.</span></li>
+          <li><b>Управление</b><span>Пульт, наземная станция и рабочие места операторов.</span></li>
+          <li><b>Поставка</b><span>Сроки, базис поставки, условия оплаты и сертификация.</span></li>
+        </ol>
+        <a class="btn btn-primary btn-block" href="contacts.html?model={p["id"]}#form">Обсудить комплектацию {icon("arrow")}</a>
+      </div>
     </div>
   </div>
 </section>
