@@ -806,3 +806,90 @@ a, button, summary, label, select, [role="button"] { cursor: pointer; }
 @media (min-width: 768px) { :root { --header-h: 80px; } }
 .logo-full { width: auto; height: 104px; object-fit: contain; }
 .logo-foot { display: inline-flex; }
+
+/* =========================================================
+   v4 — исправления после сквозной проверки
+   ========================================================= */
+/* таблица характеристик внутри карточки не должна вылезать за её границы */
+.specs { overflow: hidden; }
+.specs table { table-layout: fixed; width: 100%; }
+.specs th, .specs td { overflow-wrap: anywhere; word-break: normal; }
+.specs th { width: 46%; }
+/* не «мигать» белым до загрузки крупных фото */
+.hero-photo { background: linear-gradient(180deg, #0F1729, #0A1020); }
+.hero-photo img { border-radius: 12px; background: #fff; }
+.product-shot { background: linear-gradient(180deg, #ffffff, #f4f7fb); }
+.pc-media { background: #fff; }
+
+/* =========================================================
+   v5 — сквозная проверка отображения на всех устройствах
+   ========================================================= */
+
+/* 1. Длинные русские слова в заголовках не должны рваться посередине */
+h1, h2, h3 { hyphens: auto; }
+@media (max-width: 560px) {
+  .page-hero h1 { font-size: clamp(23px, 6.4vw, 30px); line-height: 1.12; }
+  .page-hero .lead { font-size: 15.5px; }
+  .section-head h2, .band h2 { font-size: clamp(22px, 6vw, 28px); }
+}
+
+/* 2. Выноски у героя — воздух от краёв экрана */
+@media (max-width: 560px) {
+  .callout.c1, .callout.c3 { left: 6px; }
+  .callout.c2, .callout.c4 { right: 6px; }
+  .callout dd { white-space: normal; }
+}
+
+/* 3. Карточки товара: одинаковая высота внутренних блоков в пределах ряда */
+@media (min-width: 640px) {
+  .pc-title h3 { min-height: 2.28em; }
+  .pc-sub { min-height: 2.9em; }
+  .pc-key dd { min-height: 2.6em; }
+  .pc-price { min-height: 76px; align-content: end; }
+}
+
+/* 4. Фото на странице модели — крупнее и с одинаковым полем */
+.product-shot { padding: 20px; }
+.product-shot img { max-height: 420px; max-width: 100%; height: auto; }
+@media (max-width: 899px) { .product-shot img { max-height: 320px; } }
+
+/* 5. Чипы подразделов каталога: без некрасивых переносов по слогам */
+.subtile b { hyphens: manual; overflow-wrap: break-word; }
+
+/* 6. Единый лёгкий фон под фото товара — карточки выглядят одинаково */
+.pc-media { background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%); }
+
+/* 7. Фокус-состояния видны на всех интерактивных элементах */
+a:focus-visible, button:focus-visible, summary:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 6px;
+}
+
+/* 8. Таблицы ТТХ на странице модели — горизонтальная прокрутка вместо срыва вёрстки */
+.spec-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* 9. Очень узкие экраны (320–360 px) */
+@media (max-width: 380px) {
+  .pc-key dt { font-size: 11px; }
+  .pc-key dd { font-size: 13.5px; }
+  .pc-price .value { font-size: 23px; }
+  .chips .chip { font-size: 12px; }
+}
+
+/* 10. Надзаголовок: линия остаётся на первой строке, текст не «уезжает» вправо */
+.eyebrow { align-items: flex-start; }
+.eyebrow::before { margin-top: .62em; flex: none; }
+@media (max-width: 560px) {
+  .eyebrow { font-size: 11px; letter-spacing: .1em; }
+  .eyebrow::before { width: 16px; }
+}
+
+/* 11. На телефоне 18 подразделов не должны занимать пол-экрана прокрутки */
+@media (max-width: 560px) {
+  .subtiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .subtile { grid-template-columns: 28px minmax(0, 1fr); padding: 9px 10px; gap: 8px; }
+  .subtile-ico { width: 28px; height: 28px; border-radius: 8px; }
+  .subtile-ico svg { width: 16px; height: 16px; }
+  .subtile b { font-size: 12.5px; }
+  .subtile-n { display: none; }
+}
