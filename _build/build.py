@@ -52,8 +52,8 @@ _I = {
 def icon(name, cls=""):
     return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_I[name]}</svg>'
 
-LOGO_MARK = '<img class="logo-mark" src="assets/img/logo-header.png" alt="XELON AERO — технологии для эффективного будущего" width="1750" height="260" decoding="async">'
-LOGO_FULL = '<img class="logo-full" src="assets/img/logo-full.png" alt="XELON AERO — технологии для эффективного будущего" width="1200" height="658" loading="lazy" decoding="async">'
+LOGO_MARK = '<img class="logo-mark" src="assets/img/logo-header.png" alt="XELON AERO — технологии для эффективного будущего" width="900" height="134" fetchpriority="high" decoding="async">'
+LOGO_FULL = '<img class="logo-full" src="assets/img/logo-full.png" alt="XELON AERO — технологии для эффективного будущего" width="640" height="351" loading="lazy" decoding="async">'
 
 def count_wrap(v):
     import re as _re
@@ -193,8 +193,11 @@ def page(path, title, desc, body, ld=None, og_img="assets/img/products/sprayer-5
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/logo-header.png" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/style.css">
+<!-- Веб-шрифты грузятся без блокировки отрисовки: если CDN недоступен, страница показывается системным шрифтом -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"></noscript>
 <script>document.documentElement.classList.remove("no-js")</script>
 {ld_html}
 </head>
@@ -1023,7 +1026,7 @@ def build_about():
 </section>
 {cta_band()}'''
     ld = [bl, {"@context": "https://schema.org", "@type": "AboutPage", "name": "О компании XELON AERO", "about": ORG}]
-    return page("about.html", "О компании — XELON AERO (ГК XELON)",
+    return page("about.html", "О компании XELON AERO — поставка беспилотной техники для бизнеса",
                 "XELON AERO — направление группы компаний XELON по экспорту и партнёрству: поставка сельхоздронов, погрузчиков, FPV-комплексов и оптоволоконных систем.", body, ld)
 
 def build_contacts():
@@ -1076,9 +1079,29 @@ def main():
     for _p in D.P:
         if _p.get("page"):
             pages[_p["page"]] = (lambda q: (lambda: build_product(q)))(_p)
+    import re as _re
+    _SKIP = _re.compile(r"(?is)<(script|style|svg)\b.*?</\1>|<[^>]*>")
+
+    def _typo_text(t):
+        # неразрывный пробел перед знаком рубля и внутри разрядов числа
+        t = _re.sub(r"(\d)\s(₽|руб\.)", "\\1\u00a0\\2", t)
+        for _ in range(3):
+            t = _re.sub(r"(?<=\d) (?=\d{3}(?!\d))", "\u00a0", t)
+        return t
+
+    def _typo(html):
+        """Типографика применяется только к видимому тексту — не к атрибутам, SVG, JSON-LD и скриптам."""
+        out, pos = [], 0
+        for m in _SKIP.finditer(html):
+            out.append(_typo_text(html[pos:m.start()]))
+            out.append(m.group(0))
+            pos = m.end()
+        out.append(_typo_text(html[pos:]))
+        return "".join(out)
+
     for name, fn in pages.items():
         with open(os.path.join(ROOT, name), "w", encoding="utf-8") as f:
-            f.write(fn())
+            f.write(_typo(fn()))
     pri = {"index.html": "1.0", "catalog.html": "0.9", "agro.html": "0.9", "fpv.html": "0.9", "fiber.html": "0.9", "enterprise.html": "0.9", "counter-uas.html": "0.9", "gimbals.html": "0.9", "contacts.html": "0.8", "terms.html": "0.7", "about.html": "0.6"}
     for _p in D.P:
         if _p.get("page"):
