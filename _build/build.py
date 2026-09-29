@@ -39,11 +39,21 @@ _I = {
     "filter": '<path d="M4 5h16l-6 8v5l-4 2v-7L4 5Z"/>',
     "fiber": '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
     "check": '<path d="m5 12 5 5 9-10"/>',
+    "spray": '<path d="M7 4h5v5H7z"/><path d="M9.5 9v11h-1a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2"/><path d="M14 6h3M16 9h3M15 12h3"/>',
+    "lift": '<path d="M4 18h16"/><path d="M8 18v-5h8v5"/><path d="M12 13V4"/><path d="m8.5 7.5 3.5-3.5 3.5 3.5"/>',
+    "fpv": '<circle cx="6" cy="7" r="2.2"/><circle cx="18" cy="7" r="2.2"/><circle cx="6" cy="17" r="2.2"/><circle cx="18" cy="17" r="2.2"/><path d="M8 9l2.5 2.5M16 9l-2.5 2.5M8 15l2.5-2.5M16 15l-2.5-2.5"/><rect x="10.5" y="10.5" width="3" height="3" rx="1"/>',
+    "plane": '<path d="M12 3c1 0 1.6 1.2 1.6 3v4l7 3.6v2.2L13.6 14v3.4l2.4 1.6V21l-4-1-4 1v-2l2.4-1.6V14L3.4 15.8v-2.2l7-3.6V6c0-1.8.6-3 1.6-3Z"/>',
+    "radar": '<circle cx="12" cy="12" r="9"/><path d="M12 12 19 6M12 12V3"/><path d="M4.5 16.5a9 9 0 0 0 15 0"/><circle cx="12" cy="12" r="1.5"/>',
+    "camera": '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><path d="M12 4V2M20 12h2M12 20v2M4 12H2"/>',
+    "jam": '<path d="M12 4v16"/><path d="M8 8c-2 2-2 6 0 8M16 8c2 2 2 6 0 8"/><path d="M5 5c-3.5 3.5-3.5 10.5 0 14M19 5c3.5 3.5 3.5 10.5 0 14"/>',
+    "laser-i": '<path d="M12 3v7"/><path d="m8 21 4-11 4 11"/><path d="M6 10h12"/>',
+    "chip": '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>',
 }
 def icon(name, cls=""):
     return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_I[name]}</svg>'
 
-LOGO_MARK = '''<svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#1E4FD9"/><path d="M11 11l18 18M29 11L11 29" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><circle cx="11" cy="11" r="3.4" fill="none" stroke="#A9BFFF" stroke-width="1.6"/><circle cx="29" cy="11" r="3.4" fill="none" stroke="#A9BFFF" stroke-width="1.6"/><circle cx="11" cy="29" r="3.4" fill="none" stroke="#A9BFFF" stroke-width="1.6"/><circle cx="29" cy="29" r="3.4" fill="none" stroke="#A9BFFF" stroke-width="1.6"/></svg>'''
+LOGO_MARK = '<img class="logo-mark" src="assets/img/logo-header.png" alt="XELON AERO — технологии для эффективного будущего" width="1750" height="260" decoding="async">'
+LOGO_FULL = '<img class="logo-full" src="assets/img/logo-full.png" alt="XELON AERO — технологии для эффективного будущего" width="1200" height="658" loading="lazy" decoding="async">'
 
 def count_wrap(v):
     import re as _re
@@ -80,9 +90,9 @@ NAV = [
     ("index.html", "Главная", None),
     ("catalog.html", "Каталог", [
         ("agro.html", "Сельхоздроны", "Опрыскиватели 20/30/50 л, погрузчики 15–200 кг"),
-        ("fpv.html", "FPV-комплексы ZTK", "Рамы 7″–15″, аккумуляторы, комплектующие"),
+        ("fpv.html", "FPV-комплексы XA", "Рамы 7″–15″, аккумуляторы, комплектующие"),
         ("fiber.html", "Оптоволоконные системы", "Катушки 10–30 км, модули ZR LINK"),
-        ("enterprise.html", "Промышленные дроны Autel", "EVO Lite, EVO Max, Alpha, Titan, Dragonfish"),
+        ("enterprise.html", "Промышленные дроны Autel", "EVO Lite 640T, EVO MAX 4T V2, Alpha, Titan, Dragonfish"),
         ("counter-uas.html", "Антидроновые системы", "Детекторы, радары, подавители Skyfend"),
         ("gimbals.html", "Оптико-электронные подвесы", "Гимбалы QIANJUE серий QP, QD и QG"),
         ("catalog.html", "Весь каталог с фильтрами", "82 позиции"),
@@ -91,6 +101,8 @@ NAV = [
     ("about.html", "О компании", None),
     ("contacts.html", "Контакты", None),
 ]
+NAV_ICONS = {"agro.html": "drone", "fpv.html": "fpv", "fiber.html": "fiber", "enterprise.html": "plane",
+             "counter-uas.html": "radar", "gimbals.html": "camera", "catalog.html": "grid"}
 AC = ' aria-current="page"'
 CATALOG_PAGES = {"catalog.html", "agro.html", "fpv.html", "fiber.html", "enterprise.html", "counter-uas.html", "gimbals.html"}
 
@@ -102,14 +114,15 @@ def header(path):
         cls = " is-active" if active else ""
         if sub:
             subs = "".join(
-                f'<li><a href="{h}"{AC if h == path else ""}>{esc(l)}<small>{esc(s)}</small></a></li>' for h, l, s in sub)
+                f'<li><a href="{h}"{AC if h == path else ""}><span class="nav-ico">{icon(NAV_ICONS.get(h, "grid"))}</span>'
+                f'<span class="nav-txt">{esc(l)}<small>{esc(s)}</small></span></a></li>' for h, l, s in sub)
             items.append(f'<li class="nav-item"><a class="nav-link{cls}" href="{href}"{cur}>{label}{icon("chev","caret")}</a><ul class="nav-sub">{subs}</ul></li>')
         else:
             items.append(f'<li class="nav-item"><a class="nav-link{cls}" href="{href}"{cur}>{label}</a></li>')
     return f'''<a class="skip-link" href="#main">Перейти к содержимому</a>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html" aria-label="XELON AERO — на главную">{LOGO_MARK}<span class="logo-text">XELON <b>AERO</b></span></a>
+    <a class="logo" href="index.html" aria-label="XELON AERO — на главную">{LOGO_MARK}<span class="sr-only">XELON AERO</span></a>
     <nav class="main-nav" id="main-nav" aria-label="Основная навигация">
       <ul class="nav-list">{''.join(items)}</ul>
       <div class="nav-cta"><a class="btn btn-primary btn-block" href="contacts.html#form">Получить расчёт</a></div>
@@ -124,11 +137,11 @@ def footer():
   <div class="container">
     <div class="footer-grid">
       <div class="footer-about">
-        <a class="logo" href="index.html">{LOGO_MARK}<span class="logo-text">XELON <b>AERO</b></span></a>
-        <p>Поставка сельскохозяйственных дронов, погрузочных комплексов, FPV-систем и оптоволоконных комплектов связи для B2B-заказчиков.</p>
+        <a class="logo logo-foot" href="index.html">{LOGO_FULL}<span class="sr-only">XELON AERO</span></a>
+        <p>Поставка беспилотной техники для бизнеса: сельхоздроны и погрузчики, FPV-комплексы XA, промышленные дроны Autel, оптоволоконная связь, антидроновые системы и оптико-электронные подвесы.</p>
       </div>
       <div><h4>Каталог</h4><ul>
-        <li><a href="agro.html">Сельхоздроны</a></li><li><a href="fpv.html">FPV-комплексы ZTK</a></li>
+        <li><a href="agro.html">Сельхоздроны</a></li><li><a href="fpv.html">FPV-комплексы XA</a></li>
         <li><a href="fiber.html">Оптоволоконные системы</a></li>
         <li><a href="enterprise.html">Промышленные дроны Autel</a></li><li><a href="counter-uas.html">Антидроновые системы</a></li>
         <li><a href="gimbals.html">Оптико-электронные подвесы</a></li>
@@ -152,7 +165,7 @@ def jsonld(obj):
     return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
 
 ORG = {"@type": "Organization", "name": "XELON AERO", "url": S["url"], "email": S["email"],
-       "logo": S["url"] + "/assets/img/logo.svg",
+       "logo": S["url"] + "/assets/img/favicon.png",
        "parentOrganization": {"@type": "Organization", "name": S["parent"]}}
 
 def page(path, title, desc, body, ld=None, og_img="assets/img/products/sprayer-50l.jpg", extra_js=""):
@@ -176,7 +189,8 @@ def page(path, title, desc, body, ld=None, og_img="assets/img/products/sprayer-5
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{S['url']}/{og_img}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -240,10 +254,26 @@ def product_media(p, eager=False):
     if p.get("img"):
         from PIL import Image
         w, h = Image.open(os.path.join(ROOT, "assets/img/products", p["img"])).size
-        cls = ' class="dark-photo"' if p.get("dark") else ""
-        return f'<img src="assets/img/products/{p["img"]}" alt="{esc(p["name"])}" width="{w}" height="{h}" {load} decoding="async"{cls}>'
+        alt = f'{p["name"]} — {p["subtitle"]}'
+        return f'<img src="assets/img/products/{p["img"]}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async">'
     ph = p.get("placeholder")
     return placeholder_svg(ph[1], ph[2])
+
+CAT_ICONS = {"agro": "drone", "fpv": "fpv", "fiber": "fiber", "uav": "plane", "cuas": "radar", "gimbal": "camera"}
+SUB_ICONS = {"sprayer": "spray", "loader": "lift", "frame": "fpv", "battery": "battery", "accessory": "remote",
+             "spool": "fiber", "module": "chip", "uav-multirotor": "drone", "uav-vtol": "plane",
+             "cuas-jammer": "jam", "cuas-detect": "radar", "cuas-radar": "signal", "cuas-spoof": "globe",
+             "cuas-laser": "laser-i", "cuas-complex": "layers", "gimbal-qp": "camera", "gimbal-qd": "camera",
+             "gimbal-qg": "camera"}
+
+
+SUB_WRAP = {"accessory": "Комплек&shy;тующие", "uav-multirotor": "Мульти&shy;роторные",
+            "spool": "Катушки опто&shy;волокна"}
+
+
+BRANDS = {"agro": "XELON AERO", "fpv": "XA", "fiber": "ZR LINK", "uav": "Autel Robotics",
+          "cuas": "Skyfend", "gimbal": "QIANJUE"}
+
 
 def product_card(p, heading="h3", show_tag=False):
     keys = "".join(f'<div class="pc-key"><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in p["keys"])
@@ -252,10 +282,11 @@ def product_card(p, heading="h3", show_tag=False):
          else f'<tr><th scope="row">{esc(k)}</th><td>{esc(v)}</td></tr>') for k, v in p["specs"])
     if p["price"]:
         price = f'''<div class="pc-price"><span class="label">{esc(p["price_label"])}</span>
-<span class="value" data-rub="{p["price"]}">{rub(p["price"])}</span><span class="vat">без НДС</span></div>'''
+<span class="value" data-rub="{p["price"]}">{rub(p["price"])}</span><span class="vat">{"с НДС" if p.get("vat") else "без НДС"}</span></div>'''
     else:
         price = '<div class="pc-price"><span class="label">Цена</span><span class="value on-request">По запросу</span></div>'
-    tag = f'<span class="pc-tag">{esc(D.SUBTYPES[p["sub"]])}</span>' if show_tag else ""
+    tag = (f'<span class="pc-brand">{esc(BRANDS[p["cat"]])}</span>'
+           + (f'<span class="pc-tag">{esc(D.SUBTYPES[p["sub"]])}</span>' if show_tag else ""))
     attrs = f'data-cat="{p["cat"]}" data-sub="{p["sub"]}" data-price="{p["price"] or ""}" data-payload="{p["payload"] or ""}" data-order="{D.P.index(p)}"'
     return f'''<article class="product-card" id="{p["id"]}" {attrs}>
 <div class="pc-media">{tag}{product_media(p)}</div>
@@ -264,7 +295,7 @@ def product_card(p, heading="h3", show_tag=False):
 <dl class="pc-keys" style="margin:0">{keys}</dl>
 <details class="specs"><summary>Все характеристики {icon("chev")}</summary><table><tbody>{rows}</tbody></table></details>
 {price}
-<div class="pc-actions">{f'<a class="btn btn-outline btn-sm" href="{p["page"]}">Подробнее {icon("arrow")}</a>' if p.get("page") else ""}<a class="btn btn-primary btn-sm" href="contacts.html?model={p["id"]}#form">Запросить КП</a></div>
+<div class="pc-actions">{f'<a class="btn btn-outline btn-sm" href="{p["page"]}">Подробнее</a>' if p.get("page") else ""}<a class="btn btn-primary btn-sm" href="contacts.html?model={p["id"]}#form">Запросить цену</a></div>
 </div>
 </article>'''
 
@@ -278,7 +309,7 @@ def product_ld(p):
     if p["price"]:
         o["offers"] = {"@type": "Offer", "price": p["price"], "priceCurrency": "RUB", "url": page_url,
                        "availability": "https://schema.org/PreOrder",
-                       "priceSpecification": {"@type": "UnitPriceSpecification", "price": p["price"], "priceCurrency": "RUB", "valueAddedTaxIncluded": False},
+                       "priceSpecification": {"@type": "UnitPriceSpecification", "price": p["price"], "priceCurrency": "RUB", "valueAddedTaxIncluded": bool(p.get("vat"))},
                        "seller": {"@type": "Organization", "name": "XELON AERO"},
                        "businessFunction": "http://purl.org/goodrelations/v1#Sell"}
     return o
@@ -342,6 +373,20 @@ def request_form(form_title="Запрос коммерческого предл�
 </div>
 </form>'''
 
+def trust_band(title="Почему заказывают у нас"):
+    items = [("check", "Полные ТТХ по каждой позиции", "Характеристики и комплектация — по данным производителя, без «уточняется по факту»."),
+             ("sliders", "Комплектация под задачу", "Собираем поставку от одной платформы до комплекса с подвесами и наземным оборудованием."),
+             ("coin", "Прозрачный расчёт", "В коммерческом предложении — цена, сроки, базис поставки и условия оплаты."),
+             ("handshake", "Работа с B2B", "Агрохолдинги, дистрибьюторы, интеграторы и службы безопасности — поставка по договору.")]
+    cards = "".join(f'<div class="trust"><span class="kit-icon">{icon(i)}</span><b>{t}</b><p>{d}</p></div>' for i, t, d in items)
+    return f'''<section class="section section-alt trust-band">
+  <div class="container">
+    {section_head("XELON AERO", title)}
+    <div class="trust-grid">{cards}</div>
+  </div>
+</section>'''
+
+
 def cta_band(title="Готовы обсудить комплектацию поставки", text="Направьте перечень интересующих моделей и требуемый объём — подготовим точный расчёт стоимости, сроков и условий поставки под задачи вашего проекта."):
     return f'''<section class="dark grid-bg cta-band"><div class="container cta-inner">
 <div><h2>{title}</h2><p>{text}</p></div>
@@ -379,9 +424,9 @@ def build_index():
     m_html = "".join(f'<div class="metric"><span class="metric-icon">{icon(i)}</span><div><div class="metric-value">{count_wrap(v)}</div><div class="metric-label">{l}</div></div></div>' for i, v, l in metrics)
     dirs = [
         ("01", "agro.html", "sprayer-30l.jpg", "Сельскохозяйственные дроны", "Опрыскиватели 20/30/50 л и погрузочно-разбрасывающие платформы от 15 до 200 кг грузоподъёмности.", ["3 модели опрыскивателей", "5 моделей погрузчиков", "Класс защиты IP65"]),
-        ("02", "fpv.html", "fpv-an13b.jpg", "FPV-комплексы ZTK", "Линейка рам 7″–15″ для мониторинга, инспекции и специальных задач, скорость до 160 км/ч.", ["4 модели рам", "6 типов аккумуляторов", "Полный набор комплектующих"]),
+        ("02", "fpv.html", "fpv-an13b.jpg", "FPV-комплексы XA", "Линейка рам 7″–15″ для мониторинга, инспекции и специальных задач, скорость до 160 км/ч.", ["4 модели рам", "6 типов аккумуляторов", "Полный набор комплектующих"]),
         ("03", "fiber.html", "zr-link-ground.jpg", "Оптоволоконные системы", "Катушки оптоволокна 10–30 км и модули воздушного/наземного конца для помехозащищённой связи.", ["4 длины катушек", "Воздушный модуль ZR LINK", "Наземный модуль ZR LINK"]),
-        ("04", "enterprise.html", "autel-titan.jpg", "Промышленные дроны Autel", "Мультироторы EVO Lite, EVO Max, Alpha, Titan и VTOL Dragonfish для мониторинга, инспекции и доставки нагрузки.", ["7 моделей и серий", "до 10 кг нагрузки", "до 180 мин в воздухе"]),
+        ("04", "enterprise.html", "autel-titan.jpg", "Промышленные дроны Autel", "Мультироторы EVO Lite 640T, EVO MAX 4T V2, Alpha, Titan и VTOL Dragonfish для мониторинга, инспекции и доставки нагрузки.", ["7 моделей и серий", "до 10 кг нагрузки", "до 180 мин в воздухе"]),
         ("05", "counter-uas.html", "tracker-eye.jpg", "Антидроновые системы", "Обнаружение, пеленгация и противодействие БПЛА: детекторы, радары, оптика, подавители и GNSS-спуферы Skyfend.", ["18 позиций", "Радары до 15 км", "Носимые и стационарные"]),
         ("06", "gimbals.html", "gimbal-qd-200t.jpg", "Оптико-электронные подвесы", "Гимбалы и подвесы QIANJUE серий QP, QD и QG: видимый канал, тепловизор, лазерный дальномер и ИИ-сопровождение целей.", ["27 моделей", "от 260 г", "Сопровождение до 20 целей"]),
     ]
@@ -398,16 +443,16 @@ def build_index():
   <div class="container hero-grid">
     <div>
       <p class="eyebrow">Экспорт и партнёрство · B2B</p>
-      <h1>Поставка <em>сельско&shy;хозяйственных дронов</em>, погрузочных комплексов и FPV&#8209;систем</h1>
-      <p class="hero-lead">Шесть направлений беспилотной техники с полными характеристиками и комплектацией — для агрохолдингов, дистрибьюторов, интеграторов и служб безопасности.</p>
+      <h1><em>Дроны и беспилотные комплексы</em> для бизнеса — поставка под задачу заказчика</h1>
+      <p class="hero-lead">Сельхоздроны от 600 000 ₽, дроны Autel от 530 000 ₽, FPV-комплексы XA от 30 000 ₽, оптоволоконная связь, антидроновые системы и оптико-электронные подвесы. Пришлите перечень моделей — вернём расчёт с ценой, сроками и условиями поставки.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="contacts.html#form">Получить расчёт {icon("arrow")}</a>
         <a class="btn btn-ghost" href="catalog.html">{icon("grid")} Каталог техники</a>
       </div>
       <ul class="hero-trust">
-        <li>{icon("check")} Полные ТТХ по каждой позиции</li>
-        <li>{icon("check")} Цены FOB без НДС</li>
-        <li>{icon("check")} Комплектация под задачу</li>
+        <li>{icon("check")} 82 позиции в каталоге</li>
+        <li>{icon("check")} Полные ТТХ и цены в каталоге</li>
+        <li>{icon("check")} Расчёт и спецификация по запросу</li>
       </ul>
     </div>
     <div class="hero-visual">
@@ -455,9 +500,9 @@ def build_index():
       {section_head("04 · Запрос", "Обсудить комплектацию поставки", "Подготовим расчёт стоимости, сроков и условий под задачи вашего проекта.")}
       <ul class="dir-list" style="border:0;padding:0">
         <li>Сельхоздроны — 8 моделей: опрыскиватели и погрузчики</li>
-        <li>FPV-комплексы ZTK — 4 рамы, аккумуляторы, комплектующие</li>
+        <li>FPV-комплексы XA — 4 рамы, аккумуляторы, комплектующие</li>
         <li>Оптоволокно — 4 катушки, воздушный и наземный модули</li>
-        <li>Дроны Autel — 7 моделей и серий, от EVO Lite до Dragonfish</li>
+        <li>Дроны Autel — 7 моделей, от EVO Lite 640T до Dragonfish</li>
         <li>Антидроновые системы Skyfend — 18 позиций</li>
         <li>Оптико-электронные подвесы QIANJUE — 27 моделей</li>
       </ul>
@@ -467,8 +512,8 @@ def build_index():
 </section>'''
     ld = [{"@context": "https://schema.org", **ORG},
           {"@context": "https://schema.org", "@type": "WebSite", "name": "XELON AERO", "url": S["url"], "inLanguage": "ru"}]
-    return page("index.html", "XELON AERO — поставка сельхоздронов, дронов-погрузчиков и FPV-систем",
-                "Поставка сельскохозяйственных дронов-опрыскивателей 20/30/50 л, погрузчиков 15–200 кг, FPV-комплексов ZTK и оптоволоконных систем связи. FOB Шэньчжэнь, B2B.",
+    return page("index.html", "Купить дроны и БПЛА оптом — поставка для бизнеса | XELON AERO",
+                "Поставка беспилотной техники для B2B: сельхоздроны-опрыскиватели от 600 000 ₽, погрузчики до 200 кг, FPV-комплексы XA, дроны Autel от 530 000 ₽, антидроновые системы и оптико-электронные подвесы. Расчёт и спецификация по запросу.",
                 body, ld)
 
 def build_agro():
@@ -517,31 +562,31 @@ def build_agro():
   </div>
 </section>
 {cta_band()}'''
-    return page("agro.html", "Сельхоздроны: опрыскиватели 20/30/50 л и погрузчики 15–200 кг — XELON AERO",
-                "Дроны-опрыскиватели 20, 30 и 50 л (FOB от 600 000 руб. без НДС), погрузчики-разбрасыватели S616, S630, S450, S100pro, S200pro. Полные ТТХ и комплектация.",
+    return page("agro.html", "Сельхоздроны-опрыскиватели 20, 30 и 50 л — купить, цена от 600 000 ₽ | XELON AERO",
+                "Сельскохозяйственные дроны для внесения СЗР и рассева удобрений: баки 20, 30 и 50 л, цена от 600 000 ₽ без НДС, защита IP65, ресурс ≥1000 циклов. Погрузчики S616–S200pro грузоподъёмностью 15–200 кг. Расчёт поставки за один запрос.",
                 body, [bl, itemlist_ld(spr + load, "Сельскохозяйственные дроны")], og_img="assets/img/products/sprayer-30l.jpg")
 
 def build_fpv():
-    hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("fpv.html", "FPV-комплексы ZTK")],
-                         "Направление 02 · FPV-комплексы", "FPV-комплексы ZTK: рамы 7″–15″, аккумуляторы и комплектующие",
+    hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("fpv.html", "FPV-комплексы XA")],
+                         "Направление 02 · FPV-комплексы", "FPV-комплексы XA: рамы 7″–15″, аккумуляторы и комплектующие",
                          "Компактные скоростные рамы для мониторинга, инспекции и облёта и тяжёлые рамы повышенной грузоподъёмности для доставки полезной нагрузки и работы с оптоволоконным модулем.",
                          ["4 модели рам", "до 160 км/ч", "до 8 кг нагрузки", "6 типов аккумуляторов", "ELRS915"])
     frames = by(sub="frame")
     bats = by(sub="battery")
     accs = by(sub="accessory")
     brow = "".join(f'<tr><th scope="row" class="model">{esc(t)}</th><td>{esc(ch)}</td><td class="num">{size}</td><td class="num">{w}</td><td class="price" data-rub="{pr}">{rub(pr)}</td></tr>' for t, ch, size, w, pr in D.BATTERIES)
-    compat = '<div class="compat-row compat-head"><b>Аккумулятор</b><span>Рамы ZTK</span></div>' + "".join(f'<div class="compat-row"><b>{a}</b><span>{b}</span></div>' for a, b in D.COMPAT)
+    compat = '<div class="compat-row compat-head"><b>Аккумулятор</b><span>Рамы XA</span></div>' + "".join(f'<div class="compat-row"><b>{a}</b><span>{b}</span></div>' for a, b in D.COMPAT)
     body = f'''{hero}
 <section class="section" id="frames">
   <div class="container">
-    {section_head("02.1 · Рамы", "FPV-дроны ZTK AN-7, AN-10, AN-13B, AN-15B", "Контроллер F405 V3, рама Mark4 тип X, связь ELRS915. Цены — руб. без НДС за единицу.", currency_toggle())}
+    {section_head("02.1 · Рамы", "FPV-дроны XA AN-7, AN-10, AN-13B, AN-15B", "Контроллер F405 V3, рама Mark4 тип X, связь ELRS915. Цены — руб. без НДС за единицу.", currency_toggle())}
     <div class="product-grid cols-4">{''.join(product_card(p) for p in frames)}</div>
   </div>
 </section>
 
 <section class="section section-alt" id="batteries">
   <div class="container">
-    {section_head("02.2 · Аккумуляторы", "Аккумуляторы для FPV-дронов", "Шесть типоразмеров LiPo-аккумуляторов 6S / 8S с разъёмом XT60 / XT90 под все модели линейки ZTK. Поставляются отдельно от рам и подбираются под требуемое время полёта.")}
+    {section_head("02.2 · Аккумуляторы", "Аккумуляторы для FPV-дронов", "Шесть типоразмеров LiPo-аккумуляторов 6S / 8S с разъёмом XT60 / XT90 под все модели линейки XA. Поставляются отдельно от рам и подбираются под требуемое время полёта.")}
     <div class="split-2 wide-left">
       <div>
         <div class="table-wrap" tabindex="0" role="region" aria-label="Аккумуляторы">
@@ -566,9 +611,9 @@ def build_fpv():
   </div>
 </section>
 {cta_band()}'''
-    return page("fpv.html", "FPV-комплексы ZTK: рамы AN-7, AN-10, AN-13B, AN-15B — XELON AERO",
-                "FPV-дроны ZTK AN-7 (30 000 ₽), AN-10, AN-13B, AN-15B (54 000 ₽), LiPo-аккумуляторы 6S/8S, пульт RadioMaster TX12, ELRS 915, очки 5.8G, зарядные устройства.",
-                body, [bl, itemlist_ld(frames + bats + accs, "FPV-комплексы ZTK")], og_img="assets/img/products/fpv-an13b.jpg")
+    return page("fpv.html", "FPV-дроны XA: рамы 7″–15″ от 30 000 ₽ — купить оптом | XELON AERO",
+                "FPV-комплексы XA для мониторинга и специальных задач: рамы AN-7, AN-10, AN-13B и AN-15B от 30 000 до 54 000 ₽ без НДС, скорость до 160 км/ч, нагрузка до 8 кг. LiPo-аккумуляторы 6S/8S, пульты, очки и зарядные устройства — со склада поставщика.",
+                body, [bl, itemlist_ld(frames + bats + accs, "FPV-комплексы XA")], og_img="assets/img/products/fpv-an13b.jpg")
 
 def build_fiber():
     hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("fiber.html", "Оптоволоконные системы")],
@@ -605,7 +650,7 @@ def build_fiber():
   </div>
 </section>
 {cta_band()}'''
-    return page("fiber.html", "Оптоволоконные системы связи: катушки 10–30 км и модули ZR LINK — XELON AERO",
+    return page("fiber.html", "Катушки оптоволокна 10–30 км и модули ZR LINK — цена от 27 000 ₽ | XELON AERO",
                 "Катушки оптоволокна ZR010, ZR015, ZR020, ZR030 (27 000–68 000 ₽ без НДС) и модули воздушного/наземного конца ZR LINK для помехозащищённой связи.",
                 body, [bl, itemlist_ld(spools + mods, "Оптоволоконные системы")], og_img="assets/img/products/zr-link-ground.jpg")
 
@@ -614,7 +659,15 @@ def build_catalog():
                          "Каталог техники", "Каталог беспилотных авиационных комплексов",
                          "82 позиции в шести направлениях. Фильтруйте по категории, типу, цене и грузоподъёмности — и отправьте запрос на расчёт.")
     cats = [("all", "Все", len(D.P))] + [(k, v["title"], len(by(cat=k))) for k, v in D.CATEGORIES.items()]
-    seg = "".join(f'<label><input type="radio" name="cat" value="{k}"{" checked" if k=="all" else ""}><span>{t} <span class="count">{n}</span></span></label>' for k, t, n in cats)
+    seg = "".join(
+        f'<label><input type="radio" name="cat" value="{k}"{" checked" if k=="all" else ""}>'
+        f'<span>{icon(CAT_ICONS[k]) if k != "all" else icon("grid")} {t} <span class="count">{n}</span></span></label>'
+        for k, t, n in cats)
+    tiles = "".join(
+        f'<button class="subtile" type="button" data-sub="{k}" data-cat="{next(p["cat"] for p in D.P if p["sub"] == k)}">'
+        f'<span class="subtile-ico">{icon(SUB_ICONS[k])}</span><b>{SUB_WRAP.get(k, esc(v))}</b>'
+        f'<span class="subtile-n">{len(by(sub=k))}</span></button>'
+        for k, v in D.SUBTYPES.items())
     subopts = "".join(f'<option value="{k}" data-cat="{next(p["cat"] for p in D.P if p["sub"]==k)}">{v}</option>' for k, v in D.SUBTYPES.items())
     cards = "".join(product_card(p, show_tag=True) for p in D.P)
     body = f'''{hero}
@@ -626,7 +679,7 @@ def build_catalog():
         <fieldset class="f-group"><legend>Категория</legend><div class="seg">{seg}</div></fieldset>
         <div class="f-group"><label class="f-label" for="f-sub">Тип техники</label>
           <select class="select" id="f-sub" name="sub"><option value="">Все типы</option>{subopts}</select></div>
-        <div class="f-group"><label class="f-label" for="f-price">Цена, руб. без НДС</label>
+        <div class="f-group"><label class="f-label" for="f-price">Цена, руб.</label>
           <select class="select" id="f-price" name="price"><option value="">Любая</option><option value="0-20000">до 20 000 ₽</option><option value="0-50000">до 50 000 ₽</option><option value="0-100000">до 100 000 ₽</option><option value="100000-700000">100 000 – 700 000 ₽</option><option value="700000-">от 700 000 ₽</option></select>
           <label class="check"><input type="checkbox" name="priced"> Только с указанной ценой</label></div>
         <div class="f-group"><label class="f-label" for="f-payload">Грузоподъёмность / нагрузка</label>
@@ -644,6 +697,11 @@ def build_catalog():
           <select class="select" id="f-sort" style="width:auto;min-width:210px"><option value="">По направлениям</option><option value="price-asc">Цена по возрастанию</option><option value="price-desc">Цена по убыванию</option><option value="payload-desc">Грузоподъёмность ↓</option></select>
         </div>
       </div>
+      <div class="subtiles" role="group" aria-label="Подразделы каталога">
+        <button class="subtile is-on" type="button" data-sub="" data-cat="">
+          <span class="subtile-ico">{icon("grid")}</span><b>Все типы</b><span class="subtile-n">{len(D.P)}</span></button>
+        {tiles}
+      </div>
       <div class="product-grid cols-3" data-catalog>{cards}</div>
       <div class="empty-state" data-empty><p style="font-weight:700;color:var(--text);font-size:18px">Ничего не найдено</p><p class="mt-8">Измените параметры фильтра или <a href="contacts.html#form">опишите задачу в заявке</a>.</p></div>
       <div class="mt-24">{notice(S["disclaimer"] + " " + S["price_note"])}</div>
@@ -651,19 +709,19 @@ def build_catalog():
   </div>
 </section>
 {cta_band()}'''
-    return page("catalog.html", "Каталог: сельхоздроны, FPV-комплексы, оптоволоконные системы — XELON AERO",
-                "Каталог XELON AERO: дроны-опрыскиватели, погрузчики до 200 кг, FPV-рамы ZTK, аккумуляторы, комплектующие, катушки оптоволокна 10–30 км. Фильтр по цене и грузоподъёмности.",
+    return page("catalog.html", "Каталог БПЛА и оборудования: 82 позиции с ценами и ТТХ | XELON AERO",
+                "Каталог XELON AERO: дроны-опрыскиватели, погрузчики до 200 кг, FPV-рамы XA, аккумуляторы, комплектующие, катушки оптоволокна 10–30 км. Фильтр по цене и грузоподъёмности.",
                 body, [bl, itemlist_ld(D.P, "Каталог XELON AERO")])
 
 
 def build_enterprise():
     hero, bl = page_hero([("index.html", "Главная"), ("catalog.html", "Каталог"), ("enterprise.html", "Промышленные дроны Autel")],
                          "Направление 04 · Промышленные дроны", "Промышленные дроны Autel",
-                         "Мультироторные платформы EVO Lite, EVO Max, Alpha и Titan и VTOL-комплекс Dragonfish для мониторинга, инспекции, картографирования и доставки полезной нагрузки.",
+                         "Мультироторные платформы EVO Lite 640T, EVO MAX 4T V2, Alpha и Titan и VTOL-комплекс Dragonfish для мониторинга, инспекции, картографирования и доставки полезной нагрузки.",
                          ["7 моделей и серий", "до 10 кг нагрузки", "до 180 мин полёта", "до 50 км дальности", "RTK-съёмка"])
     multi, vtol = by(cat="uav", sub="uav-multirotor"), by(cat="uav", sub="uav-vtol")
-    rows = [("EVO Lite Enterprise", "40 мин", "12 км", "6K + тепловизор 640×512", "—"),
-            ("EVO Max", "42 мин", "≈20 км", "Starlight 0,0001 люкс", "—"),
+    rows = [("EVO Lite 640T", "40 мин", "12 км", "6K + тепловизор 640×512", "—"),
+            ("EVO MAX 4T V2", "42 мин", "≈20 км", "Starlight 0,0001 люкс", "—"),
             ("Autel Alpha", "—", "≈20 км", "4K, 35× зум + двойной тепловизор", "—"),
             ("Autel Titan", "60 мин", "50 км", "Сменные полезные нагрузки", "10 кг"),
             ("Dragonfish", "180 / 120 / 75 мин", "≈30 км", "4K, 20× зум", "—"),
@@ -691,8 +749,8 @@ def build_enterprise():
   </div>
 </section>
 {cta_band()}'''
-    return page("enterprise.html", "Промышленные дроны Autel: EVO Lite, EVO Max, Alpha, Titan, Dragonfish — XELON AERO",
-                "Поставка промышленных дронов Autel: EVO Lite Enterprise, EVO Max, Autel Alpha, Titan (нагрузка 10 кг), VTOL Dragonfish, EVO II Enterprise и EVO II RTK.",
+    return page("enterprise.html", "Промышленные дроны Autel: EVO Lite 640T, EVO MAX 4T V2, Alpha, Titan, Dragonfish — XELON AERO",
+                "Поставка промышленных дронов Autel: EVO Lite 640T (530 000 ₽ с НДС), EVO MAX 4T V2 (994 500 ₽ с НДС), Alpha, Titan, Dragonfish, EVO II Enterprise и EVO II RTK.",
                 body, [bl, itemlist_ld(multi + vtol, "Промышленные дроны Autel")], og_img="assets/img/products/autel-titan.jpg")
 
 def build_cuas():
@@ -721,7 +779,7 @@ def build_cuas():
 {''.join(secs)}
 <section class="section-sm"><div class="container">{notice("Все характеристики приведены по данным производителя Skyfend. Цены и комплектация — по запросу.")}</div></section>
 {cta_band()}'''
-    return page("counter-uas.html", "Антидроновые системы Skyfend: детекторы, радары, подавители — XELON AERO",
+    return page("counter-uas.html", "Антидроновые системы Skyfend: детекторы, радары и подавители БПЛА — поставка | XELON AERO",
                 "Поставка антидроновых систем Skyfend: детекторы Tracer, радары Tracker, оптико-электронные посты Tracker Eye, подавители Hunter, GNSS-спуферы Spoofer, комплексы Spotter и Sentry.",
                 body, [bl, itemlist_ld(by(cat="cuas"), "Антидроновые системы Skyfend")], og_img="assets/img/products/tracker-eye.jpg")
 
@@ -755,7 +813,7 @@ def build_gimbals():
 {''.join(secs)}
 <section class="section-sm"><div class="container">{notice("Производитель — Chengdu Qiansight Technology (QIANJUE). Все характеристики приведены по презентации серии Q, версия CHS-1.6.7. Цены и комплектация — по запросу.")}</div></section>
 {cta_band()}'''
-    return page("gimbals.html", "Оптико-электронные подвесы и гимбалы QIANJUE: серии QP, QD, QG — XELON AERO",
+    return page("gimbals.html", "Оптико-электронные подвесы QIANJUE: 27 моделей серий QP, QD, QG — цена по запросу | XELON AERO",
                 "Поставка гиростабилизированных оптико-электронных подвесов QIANJUE: 27 моделей серий QP, QD и QG с тепловизором, лазерным дальномером и ИИ-сопровождением целей.",
                 body, [bl, itemlist_ld(by(cat="gimbal"), "Оптико-электронные подвесы QIANJUE")], og_img="assets/img/products/gimbal-qd-200t.jpg")
 
@@ -791,7 +849,11 @@ def build_product(p):
         (f'<tr class="spec-group"><th colspan="2" scope="colgroup">{esc(k)}</th></tr>' if not v
          else f'<tr><th scope="row">{esc(k)}</th><td>{esc(v)}</td></tr>') for k, v in p["specs"])
     others = [o for o in by(cat=p["cat"]) if o["id"] != p["id"]][:3]
-    price = ('<div class="pc-price" style="border:0;padding:0"><span class="label">Цена</span>'
+    price = (f'<div class="pc-price" style="border:0;padding:0"><span class="label">{esc(p["price_label"])}</span>'
+             f'<span class="value" data-rub="{p["price"]}">{rub(p["price"])}</span>'
+             f'<span class="vat">{"с НДС" if p.get("vat") else "без НДС"}</span></div>'
+             if p["price"] else
+             '<div class="pc-price" style="border:0;padding:0"><span class="label">Цена</span>'
              '<span class="value on-request">По запросу</span></div>')
     from PIL import Image as _I
     w, h = _I.open(os.path.join(ROOT, "assets/img/products", p["img"])).size
@@ -860,7 +922,9 @@ def build_product(p):
   </div>
 </section>
 
-<section class="section section-alt">
+{trust_band("Почему выгодно заказывать у XELON AERO")}
+
+<section class="section">
   <div class="container">
     {section_head("Другие модели", "Остальные дроны Autel", None, '<a class="btn btn-outline" href="' + cat["page"] + '">Весь раздел ' + icon("arrow") + '</a>')}
     <div class="product-grid cols-3">{''.join(product_card(o) for o in others)}</div>
@@ -868,7 +932,11 @@ def build_product(p):
 </section>
 {cta_band()}'''
     ld = [bl, {"@context": "https://schema.org", **product_ld(p)}]
-    return page(p["page"], f'{p["name"]} — характеристики и расчёт поставки | XELON AERO', L["lead"][:300], body, ld,
+    title = (f'{p["name"]} — купить, цена {rub(p["price"])} {"с НДС" if p.get("vat") else "без НДС"} | XELON AERO'
+             if p["price"] else f'{p["name"]} — характеристики, комплектация и цена по запросу | XELON AERO')
+    meta = ((f'{p["name"]}: цена {rub(p["price"])} {"с НДС" if p.get("vat") else "без НДС"}. ' if p["price"] else f'{p["name"]}: цена по запросу. ')
+            + L["lead"] + " Подбор комплектации, расчёт сроков и условий поставки.")[:300]
+    return page(p["page"], title, meta, body, ld,
                 og_img="assets/img/products/" + p["img"])
 
 def build_terms():
@@ -936,12 +1004,12 @@ def build_about():
       <div class="org-link"></div>
       <div class="org-node"><small>Ответственное направление</small><b>{S["unit"]} — экспорт и партнёрство</b></div>
       <div class="org-link"></div>
-      <div class="org-node"><small>Бренд направления</small><b>XELON AERO</b><span class="muted small">Сельхоздроны · FPV-комплексы ZTK · Оптоволоконные системы</span></div>
+      <div class="org-node"><small>Бренд направления</small><b>XELON AERO</b><span class="muted small">Сельхоздроны · FPV-комплексы XA · Оптоволоконные системы</span></div>
     </div>
   </div>
 </section>
 <section class="dark metrics" aria-label="Ключевые показатели"><div class="container"><div class="metrics-grid">
-  {''.join(f'<div class="metric"><span class="metric-icon">{icon(i)}</span><div><div class="metric-value">{count_wrap(v)}</div><div class="metric-label">{l}</div></div></div>' for i, v, l in [("layers","3","категории техники"),("drone","9","моделей дронов в линейке"),("battery","4","модели FPV-дронов ZTK"),("signal","30 км","дальность оптоволокна"),("shield","IP65","защита сельхоздронов"),("weight","до 200 кг","грузоподъёмность")])}
+  {''.join(f'<div class="metric"><span class="metric-icon">{icon(i)}</span><div><div class="metric-value">{count_wrap(v)}</div><div class="metric-label">{l}</div></div></div>' for i, v, l in [("layers","3","категории техники"),("drone","9","моделей дронов в линейке"),("battery","4","модели FPV-дронов XA"),("signal","30 км","дальность оптоволокна"),("shield","IP65","защита сельхоздронов"),("weight","до 200 кг","грузоподъёмность")])}
 </div></div></section>
 <section class="section">
   <div class="container">
@@ -1018,7 +1086,6 @@ def main():
     urls = "".join(f'  <url><loc>{S["url"]}/{"" if n=="index.html" else n}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority></url>\n' for n, p in pri.items())
     open(os.path.join(ROOT, "sitemap.xml"), "w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /_build/\n\nSitemap: {S['url']}/sitemap.xml\n")
-    open(os.path.join(ROOT, "assets/img/logo.svg"), "w").write(LOGO_MARK.replace(' class="logo-mark"', ' xmlns="http://www.w3.org/2000/svg"'))
     print("built", len(pages), "pages")
 
 if __name__ == "__main__":
