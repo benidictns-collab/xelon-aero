@@ -703,3 +703,106 @@ a, button, summary, label, select, [role="button"] { cursor: pointer; }
 .kit-steps li::before { content: "0" counter(kit); grid-row: span 2; font-family: var(--mono); font-size: 13px; color: var(--blue); padding-top: 2px; }
 .kit-steps b { font-size: 16px; font-weight: 700; }
 .kit-steps span { font-size: 14.5px; color: var(--text-2); line-height: 1.5; }
+
+
+/* =========================================================
+   v3 — карточки товаров в едином магазинном стиле
+   ========================================================= */
+.product-grid { align-items: stretch; }
+.product-card { background: var(--bg); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(10,16,32,.04); }
+.product-card:hover { border-color: #C7D6FA; box-shadow: 0 2px 6px rgba(10,16,32,.06), 0 22px 48px rgba(10,16,32,.10); }
+
+.pc-media { aspect-ratio: 1 / 1 !important; background: #fff !important; border-bottom: 1px solid var(--line); padding: 0 !important; }
+.pc-media img { inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: contain; mix-blend-mode: normal !important; border-radius: 0; }
+.product-card[data-cat="gimbal"] .pc-media img { inset: 0 !important; width: 100% !important; height: 100% !important; }
+.product-card:hover .pc-media img { transform: scale(1.04); }
+.product-card[data-cat="gimbal"]:hover .pc-media img { transform: scale(1.04); }
+
+.pc-brand {
+  position: absolute; left: 12px; top: 12px; z-index: 2; font-family: var(--mono);
+  font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--navy-900); background: rgba(255,255,255,.92); border: 1px solid var(--line);
+  padding: 5px 9px; border-radius: 6px; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.pc-tag { left: auto !important; right: 12px; top: 12px; font-size: 10.5px !important; color: var(--muted) !important; }
+
+.pc-body { padding: 18px 18px 20px; gap: 12px; }
+.pc-title h3 { font-size: 19px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pc-sub { font-size: 13.5px; min-height: 2.9em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pc-keys { border-radius: 10px; }
+.pc-key { padding: 9px 11px; }
+.pc-key dt { font-size: 11px; }
+.pc-key dd { font-size: 13.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.specs > summary { font-size: 13.5px; padding: 10px 12px; min-height: 42px; }
+.pc-price { padding-top: 12px; align-items: baseline; }
+.pc-price .label { font-size: 10.5px; }
+.pc-price .value { font-size: 24px; }
+.pc-price .value.on-request { font-size: 18px; color: var(--text); }
+.pc-price .vat { font-size: 12.5px; }
+.pc-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(172px, 1fr)); gap: 8px; }
+.pc-actions .btn { width: 100%; flex: none; }
+
+/* блок доверия */
+.trust-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .trust-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.trust { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; gap: 12px; align-content: start; }
+.trust b { font-size: 17px; line-height: 1.3; }
+.trust p { color: var(--text-2); font-size: 14.5px; line-height: 1.55; }
+
+/* =========================================================
+   v3 — общая полировка: ритм, типографика, тени, таблицы
+   ========================================================= */
+:root { --shadow: 0 1px 2px rgba(10,16,32,.04), 0 10px 28px rgba(10,16,32,.07); }
+.section-head { margin-bottom: 40px; }
+.section-head .num { font-size: 12px; letter-spacing: .16em; }
+.section-head h2 { font-size: clamp(27px, 4.2vw, 40px); }
+.section-head p { font-size: 16.5px; line-height: 1.6; }
+.dir-card { border-radius: 16px; }
+.dir-media { background: #fff; border-bottom: 1px solid var(--line); }
+.dir-media img { mix-blend-mode: normal; }
+.panel { border-radius: 16px; }
+.data-table thead th { font-size: 12.5px; letter-spacing: .04em; text-transform: none; }
+.data-table th, .data-table td { padding: 14px 16px; }
+.table-wrap { border-radius: 16px; box-shadow: 0 1px 2px rgba(10,16,32,.03); }
+.chip { padding: 7px 13px; }
+.btn { border-radius: 11px; }
+.form-card { border-radius: 20px; }
+.metric-value { letter-spacing: -0.03em; }
+.footer-grid a:hover { color: var(--blue-200); }
+@media (min-width: 1024px) { .section { padding: 104px 0; } }
+
+/* фирменный знак: чёрная подложка исходника гасится режимом screen на тёмном фоне */
+.logo-mark { width: auto; height: 34px; object-fit: contain; }
+@media (min-width: 768px) { .logo-mark { height: 42px; } }
+.logo-text { letter-spacing: .16em; }
+
+/* ---------- Иконки подразделов каталога ---------- */
+.seg label > span svg { width: 18px; height: 18px; color: var(--blue); flex: none; }
+.seg input:checked + span svg { color: var(--blue-200); }
+.nav-sub a { display: grid !important; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; }
+.nav-ico { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(30,79,217,.22); color: var(--blue-200); }
+.nav-ico svg { width: 20px; height: 20px; }
+.nav-txt { display: block; min-width: 0; }
+@media (max-width: 1023px) { .nav-sub a { grid-template-columns: 34px 1fr; } .nav-ico { width: 34px; height: 34px; } }
+
+.subtiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(204px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.subtile {
+  display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 10px; text-align: left;
+  padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); cursor: pointer;
+  transition: border-color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.subtile:hover { border-color: #BFD0FA; box-shadow: var(--shadow); }
+.subtile b { font-size: 13px; font-weight: 600; line-height: 1.25; min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
+.subtile-ico { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; background: var(--blue-50); color: var(--blue); }
+.subtile-ico svg { width: 19px; height: 19px; }
+.subtile-n { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.subtile.is-on { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+.subtile.is-on .subtile-ico { background: rgba(169,191,255,.16); color: var(--blue-200); }
+.subtile.is-on .subtile-n { color: var(--blue-200); }
+
+/* шапка чуть выше, чтобы логотип-локап помещался целиком */
+:root { --header-h: 68px; }
+@media (min-width: 768px) { :root { --header-h: 80px; } }
+.logo-full { width: auto; height: 104px; object-fit: contain; }
+.logo-foot { display: inline-flex; }
