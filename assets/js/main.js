@@ -128,10 +128,33 @@
     if (p.get("priced")) filters.elements.priced.checked = true;
     if (p.get("sort") && sortEl) sortEl.value = p.get("sort");
 
-    filters.addEventListener("change", function () { apply(true); });
+    // плитки подразделов
+    var tiles = $$(".subtile");
+    var syncTiles = function () {
+      var cur = filters.elements.sub ? filters.elements.sub.value : "";
+      tiles.forEach(function (t) { t.classList.toggle("is-on", (t.dataset.sub || "") === cur); });
+    };
+    tiles.forEach(function (t) {
+      t.addEventListener("click", function () {
+        var sub = t.dataset.sub || "";
+        if (sub && t.dataset.cat) {
+          var r = $('input[name="cat"][value="' + CSS.escape(t.dataset.cat) + '"]', filters);
+          if (r) r.checked = true;
+        } else {
+          var all = $('input[name="cat"][value="all"]', filters);
+          if (all) all.checked = true;
+        }
+        syncSubOptions(filters.elements.cat.value);
+        filters.elements.sub.value = sub;
+        apply(true); syncTiles();
+        grid.scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+    });
+
+    filters.addEventListener("change", function () { apply(true); syncTiles(); });
     if (sortEl) sortEl.addEventListener("change", function () { apply(true); });
-    filters.addEventListener("reset", function () { setTimeout(function () { if (sortEl) sortEl.value = ""; apply(true); }, 0); });
-    apply(false);
+    filters.addEventListener("reset", function () { setTimeout(function () { if (sortEl) sortEl.value = ""; apply(true); syncTiles(); }, 0); });
+    apply(false); syncTiles();
   }
 
   /* ---------- Request form ---------- */
